@@ -1,0 +1,42 @@
+version: 1
+script:
+  - rm -rf AppDir | true
+  - mkdir -p AppDir/bin AppDir/usr/share/icons/hicolor/scalable/apps/
+  - cp ./build/bread AppDir/bin
+  - cp .github/bread.svg AppDir/usr/share/icons/hicolor/scalable/apps/
+
+AppDir:
+  path: ./AppDir
+
+  app_info:
+    id: user.DEVLOPRR.bread
+    name: bread
+    icon: bread
+    version: !ENV ${BREAD_VERSION}
+    exec: bin/bread
+    exec_args: $@
+
+  apt:
+    arch: amd64
+    sources:
+      - sourceline: 'deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ bionic main restricted universe multiverse'
+        key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x3b4fe6acc0b21f32'
+      - sourceline: 'deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ bionic-updates main restricted universe multiverse'
+      - sourceline: 'deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ bionic-backports main restricted universe multiverse'
+      - sourceline: 'deb http://archive.neon.kde.org/user bionic main'
+        key_url: 'http://archive.neon.kde.org/public.key'
+
+    include:
+      - libappimage0
+    exclude:
+      - libpcre3
+      - binutils
+      - dpkg-dev
+      - gir1.2-freedesktop
+      - python3
+      - libxrender1
+
+AppImage:
+  update-information: 'gh-releases-zsync|DEVLOPRR|bread|latest|*x86_64.AppImage.zsync'
+  sign-key: None
+  arch: x86_64
