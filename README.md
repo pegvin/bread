@@ -1,4 +1,4 @@
-# Bread ![:bread:]('./.github/bread.svg')
+# Bread ![:bread:](./.github/bread.svg)
 
 Install, update and remove AppImage from GitHub using your CLI.
 
