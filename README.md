@@ -23,6 +23,15 @@ One Liner:
 sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.1.0/bread-0.1.0-x86_64.AppImage -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread
 ```
 
+## Uninstallation
+
+Just Remove the binary
+```bash
+rm -v /usr/local/bin/bread
+```
+
+**NOTE** this won't delete the app you've installed.
+
 ## Usage
 
 ### Install a app from GitHub release
