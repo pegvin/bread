@@ -2,7 +2,7 @@
 
 Install, update and remove AppImage from GitHub using your CLI.
 
-Features:
+## Features
 - Install from the GitHub Releases
 - Update with ease
 
