@@ -10,7 +10,7 @@ Install, update and remove AppImage from GitHub using your CLI.
 
 Download The Bread Binary into `/usr/local/bin`
 ```bash
-sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.1.0/bread-0.1.0-x86_64.AppImage -O /usr/local/bin/bread
+sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.2.1/bread-0.2.1-x86_64.AppImage -O /usr/local/bin/bread
 ```
 
 Give Executable Permissions To Downloaded Binary
@@ -20,7 +20,7 @@ sudo chmod +x /usr/local/bin/bread
 
 One Liner:
 ```bash
-sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.1.0/bread-0.1.0-x86_64.AppImage -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread
+sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.2.1/bread-0.2.1-x86_64.AppImage -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread
 ```
 
 ---
@@ -38,6 +38,8 @@ rm -v /usr/local/bin/bread
 
 ## Usage
 
+**NOTE** if the user and repo in `user/repo` are same then you can just specify the single name itself, which means `libresprite/libresprite` is equal to `libresprite`
+
 ### Install a app from GitHub release
 ```bash
 bread install user/repo
@@ -45,7 +47,7 @@ bread install user/repo
 
 ### Update a app
 ```bash
-bread update app-id
+bread update user/repo
 ```
 
 ### List all of the installed apps
@@ -55,10 +57,8 @@ bread list
 
 ### Remove a installed app
 ```bash
-bread remove app-id
+bread remove user/repo
 ```
-
-**NOTE** here app-id is the Application id which you have installed. to get your application id run `imagehub list`
 
 ---
 
