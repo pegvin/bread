@@ -34,7 +34,7 @@ jobs:
         with:
           recipe: 'AppImage-Builder.yml'
         env:
-          IMAGEHUB_VERSION: ${{github.event.inputs.version}}
+          BREAD_VERSION: ${{github.event.inputs.version}}
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2
