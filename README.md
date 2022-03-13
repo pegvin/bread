@@ -10,7 +10,7 @@ Install, update and remove AppImage from GitHub using your CLI.
 
 Download The Bread Binary into `/usr/local/bin`
 ```bash
-sudo wget https://github.com/DEVLOPRR/bread/releases/download/v0.1.0/bread-0.1.0-x86_64.AppImage -O /usr/local/bin/bread
+sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.1.0/bread-0.1.0-x86_64.AppImage -O /usr/local/bin/bread
 ```
 
 Give Executable Permissions To Downloaded Binary
@@ -20,7 +20,7 @@ sudo chmod +x /usr/local/bin/bread
 
 One Liner:
 ```bash
-sudo wget https://github.com/DEVLOPRR/bread/releases/download/v0.1.0/bread-0.1.0-x86_64.AppImage -O /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread
+sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.1.0/bread-0.1.0-x86_64.AppImage -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread
 ```
 
 ## Usage
