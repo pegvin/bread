@@ -16,7 +16,7 @@ type InstallCmd struct {
 }
 
 // Function Which Will Be Called When `install` is the Command.
-func (cmd *InstallCmd) Run(*Context) (err error) {
+func (cmd *InstallCmd) Run() (err error) {
 	if _, err := os.Stat(cmd.Target); err == nil {
 		cmd.createDesktopIntegration(cmd.Target)
 		return nil

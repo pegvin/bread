@@ -20,7 +20,7 @@ type UpdateCmd struct {
 var NoUpdateInfo = errors.New("there is no update information")
 
 // Function Which Will Be Executed When `update` is called.
-func (cmd *UpdateCmd) Run(*Context) (err error) {
+func (cmd *UpdateCmd) Run() (err error) {
 	if cmd.All {
 		cmd.Targets, err = getAllTargets()
 		if err != nil {

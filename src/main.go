@@ -7,8 +7,6 @@ import (
 )
 
 var cli struct {
-	Debug bool `help:"Enable debug mode."`
-
 	Install  commands.InstallCmd  `cmd:"" help:"Install an application."`
 	List     commands.ListCmd     `cmd:"" help:"List installed applications."`
 	Remove   commands.RemoveCmd   `cmd:"" help:"Remove an application."`
@@ -18,6 +16,6 @@ var cli struct {
 func main() {
 	ctx := kong.Parse(&cli)
 	// Call the Run() method of the selected parsed command.
-	err := ctx.Run(&commands.Context{Debug: cli.Debug})
+	err := ctx.Run()
 	ctx.FatalIfErrorf(err)
 }
