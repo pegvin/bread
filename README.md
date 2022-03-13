@@ -62,7 +62,7 @@ bread remove user/repo
 
 ---
 
-### Full usage
+## Full usage
 
 ```bash
 Usage: bread <command>
@@ -88,11 +88,45 @@ Run "bread <command> --help" for more information on a command.
 
 ---
 
-### Todo
+## Building From Source
+
+Make Sure You Have Go version 1.17.x & [AppImage Builder](https://appimage-builder.readthedocs.io/en/latest/) Installed.
+
+Get The Repository Via Git:
+
+```bash
+git clone https://github.com/DEVLOPRR/bread
+```
+
+Go Inside The Source Code Directory & Get All The Dependencies:
+
+```bash
+cd bread
+go mod tidy
+```
+
+Make The Build Script Executable And Run It
+
+```bash
+chmod +x ./make
+./make
+```
+
+And To Build The AppImage Run
+
+```bash
+./make appimage
+```
+
+---
+
+## Todo
 - Improve UI
 - Work On Reducing Binary Sizes
 - Add `-v, --version` To Get The Version
 - Mirrors:
   - I Would Like To Introduce Concept Of Mirror Lists Which Contain The List Of AppImages With The Download URL, tho currently i am not working on it but in future i might.
 
-## Thanks
+---
+
+# Thanks
