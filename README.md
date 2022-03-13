@@ -20,7 +20,7 @@ sudo chmod +x /usr/local/bin/bread
 
 One Liner:
 ```bash
-sudo wget https://github.com/DEVLOPRR/imageHub/releases/download/0.1.0/bread-0.1.0-x86_64.AppImage -O /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread
+sudo wget https://github.com/DEVLOPRR/bread/releases/download/0.1.0/bread-0.1.0-x86_64.AppImage -O /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread
 ```
 
 ## Usage
