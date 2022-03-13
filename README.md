@@ -1,4 +1,4 @@
-# Bread :bread: <!--![imagehub logo edited using figma](./assets/imagehub-logo.svg) -->
+# Bread ![:bread:]('./.github/bread.svg')
 
 Install, update and remove AppImage from GitHub using your CLI.
 
