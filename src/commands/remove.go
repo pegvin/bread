@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"bread/src/helpers/utils"
 	"os"
+	"strings"
 )
 
 type RemoveCmd struct {
@@ -12,7 +13,7 @@ type RemoveCmd struct {
 }
 
 // Function which will be executed when `remove` is called.
-func (cmd *RemoveCmd) Run(*Context) (err error) {
+func (cmd *RemoveCmd) Run() (err error) {
 	registry, err := utils.OpenRegistry()
 	if err != nil {
 		return err
@@ -20,6 +21,10 @@ func (cmd *RemoveCmd) Run(*Context) (err error) {
 	defer registry.Close()
 
 	registry.Update()
+
+	if len(strings.Split(cmd.Target, "/")) < 2 {
+		cmd.Target = cmd.Target + "/" + cmd.Target;
+	}
 
 	entry, ok := registry.Lookup(cmd.Target)
 	if !ok {

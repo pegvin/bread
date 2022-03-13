@@ -20,6 +20,11 @@ import (
 	"path/filepath"
 )
 
+type BinaryUrl struct {
+	FileName string
+	Url      string
+}
+
 func MakeApplicationsDirPath() (string, error) {
 	usr, err := user.Current()
 	if err != nil {
@@ -66,11 +71,6 @@ func DownloadAppImage(url string, filePath string) error {
 
 	_, err = io.Copy(io.MultiWriter(output, bar), resp.Body)
 	return err
-}
-
-type BinaryUrl struct {
-	FileName string
-	Url      string
 }
 
 func PromptBinarySelection(downloadLinks []BinaryUrl) (result *BinaryUrl, err error) {

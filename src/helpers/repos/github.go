@@ -18,24 +18,22 @@ type GitHubRepo struct {
 // Function which parses string to a github repo information, adn returns a object and error (if any)
 func NewGitHubRepo(target string) (repo Repo, err error) {
 	repo = &GitHubRepo{}
-	var targetParts []string;
 
-	if strings.HasPrefix(target, "gh:") {
-		// Take the `gh:user/repo` Remove "gh:" and split `user` and `repo`
-		targetParts = strings.Split(target[3:], "/")
-	} else {
-		// Take the `gh:user/repo` and split `user` and `repo`
-		targetParts = strings.Split(target, "/")
-	}
+	// Take the `user/repo` and split `user` and `repo`
+	targetParts := strings.Split(target, "/")
+	ghSource := GitHubRepo{}
 
 	targetPartsLen := len(targetParts)
 	if targetPartsLen < 2 {
-		return repo, InvalidTargetFormat
-	}
-
-	ghSource := GitHubRepo{
-		User:    targetParts[0],
-		Project: targetParts[1],
+		ghSource = GitHubRepo{
+			User:    targetParts[0],
+			Project: targetParts[0],
+		}
+	} else {
+		ghSource = GitHubRepo{
+			User:    targetParts[0],
+			Project: targetParts[1],
+		}
 	}
 
 	if targetPartsLen > 2 {
@@ -51,7 +49,7 @@ func NewGitHubRepo(target string) (repo Repo, err error) {
 
 // Function to get the github repo id from the repo information
 func (g GitHubRepo) Id() string {
-	id := "gh:" + g.User + "/" + g.Project
+	id := g.User + "/" + g.Project
 
 	return id
 }
