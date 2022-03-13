@@ -5,13 +5,13 @@ set -e
 COMPILER="go"
 BINARY="bread"
 DIST="build"
-ENTRY_FILE="cmd/main.go"
+ENTRY_FILE="src/main.go"
 OUTPUT="$DIST/$BINARY"
 VERSION="0.1.0"
 
 if [[ $1 = '' ]]; then
 	echo "Compiling '$ENTRY_FILE' into '$DIST'"
-	${COMPILER} build -o ${OUTPUT} -v ./cmd # ${ENTRY_FILE}
+	${COMPILER} build -o ${OUTPUT} -v ${ENTRY_FILE}
 	echo "Compiled Successfully into '$OUTPUT'"
 elif [[ $1 = 'appimage' ]]; then
 	echo "Building AppImage"
