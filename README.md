@@ -88,4 +88,11 @@ Run "bread <command> --help" for more information on a command.
 
 ---
 
+### Todo
+- Improve UI
+- Work On Reducing Binary Sizes
+- Add `-v, --version` To Get The Version
+- Mirrors:
+  - I Would Like To Introduce Concept Of Mirror Lists Which Contain The List Of AppImages With The Download URL, tho currently i am not working on it but in future i might.
+
 ## Thanks
