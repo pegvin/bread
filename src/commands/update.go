@@ -29,6 +29,9 @@ func (cmd *UpdateCmd) Run() (err error) {
 	}
 
 	for _, target := range cmd.Targets {
+		if len(strings.Split(target, "/")) < 2 {
+			target = target + "/" + target
+		}
 		entry, err := cmd.getRegistryEntry(target)
 		if err != nil {
 			continue
