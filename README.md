@@ -10,7 +10,7 @@ Install, update and remove AppImage from GitHub using your CLI.
 
 Download The Bread Binary into `/usr/local/bin`
 ```bash
-sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.2.1/bread-0.2.1-x86_64.AppImage -O /usr/local/bin/bread
+sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.2.2/bread-0.2.2-x86_64.AppImage -O /usr/local/bin/bread
 ```
 
 Give Executable Permissions To Downloaded Binary
@@ -20,7 +20,7 @@ sudo chmod +x /usr/local/bin/bread
 
 One Liner:
 ```bash
-sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.2.1/bread-0.2.1-x86_64.AppImage -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread
+sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.2.2/bread-0.2.2-x86_64.AppImage -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread
 ```
 
 ---
@@ -67,21 +67,17 @@ bread remove user/repo
 ```bash
 Usage: bread <command>
 
+Install, update and remove AppImage from GitHub using your CLI.
+
 Flags:
-  --help     Show context-sensitive help.
+  -h, --help       Show context-sensitive help.
+      --version    Print version information and quit
 
 Commands:
-  install <target>
-    Install an application.
-
-  list
-    List installed applications.
-
-  remove <id>
-    Remove an application.
-
-  update [<targets> ...]
-    Update an application.
+  install    Install an application.
+  list       List installed applications.
+  remove     Remove an application.
+  update     Update an application.
 
 Run "bread <command> --help" for more information on a command.
 ```
@@ -121,10 +117,10 @@ And To Build The AppImage Run
 ---
 
 ## Todo
-- Improve UI
-- Work On Reducing Binary Sizes
-- Add `-v, --version` To Get The Version
-- Mirrors:
+- [ ] Improve UI
+- [ ] Work On Reducing Binary Sizes
+- [x] Add `--version` To Get The Version (Done in v0.2.2)
+- [ ] Mirrors:
   - I Would Like To Introduce Concept Of Mirror Lists Which Contain The List Of AppImages With The Download URL, tho currently i am not working on it but in future i might.
 
 ---
