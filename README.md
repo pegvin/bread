@@ -119,6 +119,8 @@ And To Build The AppImage Run
 ## Todo
 - [ ] Improve UI
 - [ ] Work On Reducing Binary Sizes
+- [ ] Add Support For Installing Directly Via URLS
+- [ ] Add 32 Bit Builds
 - [x] Add `--version` To Get The Version (Done in v0.2.2)
 - [ ] Mirrors:
   - I Would Like To Introduce Concept Of Mirror Lists Which Contain The List Of AppImages With The Download URL, tho currently i am not working on it but in future i might.
