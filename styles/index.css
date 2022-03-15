@@ -1,0 +1,221 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&display=swap');
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+:root {
+	font-size: 16px;
+}
+
+body {
+	font-size: 1rem;
+	color: #E8E8E8;
+	background-color: #1b1d1f;
+	font-family: 'Lato', sans-serif;
+}
+
+.inner {
+	position: relative;
+	max-width: 640px;
+	padding: 20px 10px;
+	margin: 0 auto;
+}
+
+.headerWrapper, .footerWrapper {
+	background: #25292b;
+	background: linear-gradient(82deg, #25292b 0%, #3b4144 100%); 
+}
+
+.footerWrapper {
+	text-align: center;
+}
+
+.headerWrapper .inner {
+	padding: 50px 10px 30px 10px;
+}
+
+#projectTitle {
+	margin: 0;
+	color: #fff;
+	font-size: 2.625rem;
+	font-weight: 700;
+	text-shadow: #111 0px 0px 10px;
+}
+
+#projectTagline {
+	color: #fff;
+	font-size: 1.5rem;
+	font-weight: 500;
+	background: none;
+	text-shadow: #111 0px 0px 10px;
+}
+
+#forkmeBanner {
+	display: block;
+	position: absolute;
+	top: 0;
+	right: 10px;
+	z-index: 10;
+	padding: 10px 50px 10px 10px;
+	color: #fff;
+	background: url(./images/blacktocat.png) #0090ff no-repeat 95% 50%;
+	font-weight: 700;
+	box-shadow: 0 0 10px rgba(0,0,0,0.5);
+	border-radius: 0 0 3px 3px;
+}
+
+#forkmeBanner:hover {
+	background-color: #189bff;
+	text-decoration: none;
+}
+
+#downloads a {
+	display: block;
+	float: right;
+	width: 90px;
+	height: 70px;
+	text-indent: -5000px;
+	overflow: hidden;
+}
+
+#downloads {
+	position: absolute;
+	width: 210px;
+	z-index: 10;
+	bottom: -40px;
+	right: 0;
+	height: 70px;
+	background: url(./images/icon_download.png) no-repeat 0% 90%;
+}
+
+#downloads a { background-image: url(./images/sprite_download.png); }
+
+#downloads a.zip_download {
+	background-repeat: no-repeat;
+	background-position: bottom left;
+}
+
+#downloads a.zip_download:hover {
+	background-repeat: no-repeat;
+	background-position: top left;
+}
+
+#downloads a.tar_download {
+	background-repeat: no-repeat;
+	background-position: bottom right;
+}
+
+#downloads a.tar_download:hover {
+	background-repeat: no-repeat;
+	background-position: top right;
+}
+
+.bodyWrapper .inner {
+	padding-top: 50px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	margin: 10px 0;
+	letter-spacing:-1px
+}
+
+h1 { font-size: 2.25rem; font-weight: 700; }
+h2 { font-size: 2rem; padding-bottom: 10px; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.3125rem; }
+h5 { font-size: 1.125rem; }
+h6 { font-size: 1rem; }
+em { font-style: italic; }
+strong { font-weight: 900; }
+
+p {
+	font-size: 1.05rem;
+	font-weight: 400;
+	margin: 10px 0 15px 0;
+}
+
+a:hover { text-decoration: underline; }
+
+a {
+	text-decoration: none;
+	color: #0090ff;
+	text-shadow: none;
+	transition: color 0.5s ease;
+	transition: text-shadow 0.5s ease;
+	-webkit-transition: color 0.5s ease;
+	-webkit-transition: text-shadow 0.5s ease;
+	-moz-transition: color 0.5s ease;
+	-moz-transition: text-shadow 0.5s ease;
+	-o-transition: color 0.5s ease;
+	-o-transition: text-shadow 0.5s ease;
+	-ms-transition: color 0.5s ease;
+	-ms-transition: text-shadow 0.5s ease;
+}
+
+ul, ol {
+	list-style-position: inside;
+	padding-left: 20px;
+}
+
+ul { list-style: disc; }
+ol { list-style: decimal; }
+li::marker { font-weight: bold; }
+
+blockquote {
+	color: #b3b3b3;
+	margin-bottom: 20px;
+	padding: 0 0 0 20px;
+	border-left: 3px solid #bbb;
+}
+
+hr {
+	margin: 2rem 0;
+}
+
+pre {
+	max-height: 500px;
+	overflow: auto;
+	margin: 20px 0;
+	padding: 10px 0;
+	background-color: #333;
+	border-radius: 5px;
+	padding: 10px;
+}
+
+pre a, code a {
+	color: #189bff;
+}
+
+pre, code {
+	color: #f1f1f1;
+	font-weight: 700;
+	font-family: 'Ubuntu Mono', monospace;
+	background: #33393b;
+	background: linear-gradient(82deg, #33393b 0%, #333 100%);
+}
+
+p code {
+	margin: 3px 0;
+	display: inline-block;
+	border-radius: 5px;
+	padding: 1px 5px;
+}
+
+@media screen and (max-width: 480px) {
+	:root {
+		font-size: 14px;
+	}
+	#downloads {
+		display: none;
+	}
+}
+
+@media screen and (max-width: 370px) {
+	:root {
+		font-size: 12px;
+	}
+}
