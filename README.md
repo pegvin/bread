@@ -8,19 +8,14 @@ Install, update and remove AppImage from GitHub using your CLI. (Fork of [AppIma
 
 ## Installation
 
-Download The Bread Binary into `/usr/local/bin`
-```bash
-sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.2.3/bread-0.2.3-x86_64.AppImage -O /usr/local/bin/bread
-```
-
-Give Executable Permissions To Downloaded Binary
-```bash
-sudo chmod +x /usr/local/bin/bread
-```
-
-One Liner:
+With Curl:
 ```bash
 sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.2.3/bread-0.2.3-x86_64.AppImage -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread
+```
+
+With Wget:
+```bash
+sudo wget -O /usr/local/bin/bread https://github.com/DEVLOPRR/bread/releases/download/v0.2.3/bread-0.2.3-x86_64.AppImage && sudo chmod +x /usr/local/bin/bread
 ```
 
 ---
@@ -40,12 +35,16 @@ rm -v /usr/local/bin/bread
 
 **NOTE** if the user and repo in `user/repo` are same then you can just specify the single name itself, which means `libresprite/libresprite` is equal to `libresprite`
 
+---
+
 ### Installing
 
 Installing a App from GitHub Release
 ```bash
 bread install user/repo
 ```
+
+---
 
 ### Updating
 
@@ -59,6 +58,8 @@ Updating All Of The Apps
 bread update --all
 ```
 
+---
+
 ### Removing
 
 Completely Removing a installed app
@@ -70,6 +71,8 @@ Only De-Integrating The App But Not Removing It
 ```bash
 bread remove user/repo --keep-file
 ```
+
+---
 
 ### List all of the installed apps
 ```bash
