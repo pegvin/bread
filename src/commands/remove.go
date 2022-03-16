@@ -14,24 +14,25 @@ type RemoveCmd struct {
 
 // Function which will be executed when `remove` is called.
 func (cmd *RemoveCmd) Run() (err error) {
-	registry, err := utils.OpenRegistry()
+	registry, err := utils.OpenRegistry() // Open The Registry
 	if err != nil {
 		return err
 	}
-	defer registry.Close()
+	defer registry.Close() // Close the registry before function end
 
-	registry.Update()
+	registry.Update() // Update the registry with latest installed appimage info
 
+	// If the user provided string is short like `libresprite` convert it to `libresprite/libresprite`
 	if len(strings.Split(cmd.Target, "/")) < 2 {
 		cmd.Target = cmd.Target + "/" + cmd.Target;
 	}
 
-	entry, ok := registry.Lookup(cmd.Target)
+	entry, ok := registry.Lookup(cmd.Target) // Find the application in the registry
 	if !ok {
 		return fmt.Errorf("application not found \"" + cmd.Target + "\"")
 	}
 
-	err = removeDesktopIntegration(entry.FilePath)
+	err = removeDesktopIntegration(entry.FilePath) // Remove the application desktop integration
 	if err != nil {
 		fmt.Println("Desktop integration removal failed: " + err.Error())
 	}
