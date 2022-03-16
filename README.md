@@ -48,6 +48,16 @@ bread install user/repo
 
 ### Updating
 
+Just Checking For Update
+```bash
+bread update user/repo --check
+```
+
+Just Checking For All Updates
+```bash
+bread update user/repo --check --all
+```
+
 Updating A Single App
 ```bash
 bread update user/repo
