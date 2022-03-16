@@ -10,7 +10,7 @@ Install, update and remove AppImage from GitHub using your CLI. (Fork of [AppIma
 
 Download The Bread Binary into `/usr/local/bin`
 ```bash
-sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.2.2/bread-0.2.2-x86_64.AppImage -O /usr/local/bin/bread
+sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.2.3/bread-0.2.3-x86_64.AppImage -O /usr/local/bin/bread
 ```
 
 Give Executable Permissions To Downloaded Binary
@@ -20,7 +20,7 @@ sudo chmod +x /usr/local/bin/bread
 
 One Liner:
 ```bash
-sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.2.2/bread-0.2.2-x86_64.AppImage -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread
+sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.2.3/bread-0.2.3-x86_64.AppImage -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread
 ```
 
 ---
@@ -118,7 +118,7 @@ And To Build The AppImage Run
 
 ## Todo
 - [ ] Improve UI
-- [ ] Work On Reducing Binary Sizes
+- [ ] Work On Reducing Binary Sizes (Reduced A bit)
 - [ ] Add Support For Installing Directly Via URLS
 - [ ] Add 32 Bit Builds
 - [ ] Add Auto Updater Which Can Update The Bread Itself
