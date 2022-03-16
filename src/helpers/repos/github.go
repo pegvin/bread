@@ -16,15 +16,15 @@ type GitHubRepo struct {
 }
 
 // Function which parses string to a github repo information, adn returns a object and error (if any)
-func NewGitHubRepo(target string) (repo Repo, err error) {
-	repo = &GitHubRepo{}
+func NewGitHubRepo(target string) (appInfo Application, err error) {
+	appInfo = &GitHubRepo{}
 
 	// Take the `user/repo` and split `user` and `repo`
 	targetParts := strings.Split(target, "/")
 	ghSource := GitHubRepo{}
 
 	targetPartsLen := len(targetParts)
-	if targetPartsLen < 2 {
+	if targetPartsLen < 2 { // If input is not in format of `user/repo` assume `user` and `repo` are same
 		ghSource = GitHubRepo{
 			User:    targetParts[0],
 			Project: targetParts[0],
@@ -50,20 +50,21 @@ func NewGitHubRepo(target string) (repo Repo, err error) {
 // Function to get the github repo id from the repo information
 func (g GitHubRepo) Id() string {
 	id := g.User + "/" + g.Project
-
 	return id
 }
 
 // Function which gets the latest appimage from github release
 func (g GitHubRepo) GetLatestRelease() (*Release, error) {
-	var downloadLinks []utils.BinaryUrl
+	var downloadLinks []utils.BinaryUrl // Contains Download Links
 
-	client := github.NewClient(nil)
+	client := github.NewClient(nil) // Client For Interacting with github api
+	// Get all the releases from the target
 	releases, _, err := client.Repositories.ListReleases(context.Background(), g.User, g.Project, nil)
 	if err != nil {
 		return nil, err
 	}
 
+	// Filter out files which are not AppImage
 	for _, release := range releases {
 		if *release.Draft {
 			continue

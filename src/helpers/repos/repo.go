@@ -9,7 +9,7 @@ type Release struct {
 	Files []utils.BinaryUrl
 }
 
-type Repo interface {
+type Application interface {
 	Id() string
 	GetLatestRelease() (*Release, error)
 	Download(binaryUrl *utils.BinaryUrl, targetPath string) error
@@ -17,7 +17,7 @@ type Repo interface {
 }
 
 // Function Which Parses String And Returns A Repo Object And Error (nil if not any)
-func ParseTarget(target string) (Repo, error) {
+func ParseTarget(target string) (Application, error) {
 	// Parse The Repo As A GitHub Repo, And if there is no error return repo
 	repo, err := NewGitHubRepo(target)
 	if err == nil {
