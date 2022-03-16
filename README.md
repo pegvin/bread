@@ -40,24 +40,40 @@ rm -v /usr/local/bin/bread
 
 **NOTE** if the user and repo in `user/repo` are same then you can just specify the single name itself, which means `libresprite/libresprite` is equal to `libresprite`
 
-### Install a app from GitHub release
+### Installing
+
+Installing a App from GitHub Release
 ```bash
 bread install user/repo
 ```
 
-### Update a app
+### Updating
+
+Updating A Single App
 ```bash
 bread update user/repo
+```
+
+Updating All Of The Apps
+```bash
+bread update --all
+```
+
+### Removing
+
+Completely Removing a installed app
+```bash
+bread remove user/repo
+```
+
+Only De-Integrating The App But Not Removing It 
+```bash
+bread remove user/repo --keep-file
 ```
 
 ### List all of the installed apps
 ```bash
 bread list
-```
-
-### Remove a installed app
-```bash
-bread remove user/repo
 ```
 
 ---
@@ -86,7 +102,7 @@ Run "bread <command> --help" for more information on a command.
 
 ## Building From Source
 
-Make Sure You Have Go version 1.17.x & [AppImage Builder](https://appimage-builder.readthedocs.io/en/latest/) Installed.
+Make Sure You Have Go version 1.18.x & [AppImage Builder](https://appimage-builder.readthedocs.io/en/latest/) Installed.
 
 Get The Repository Via Git:
 
@@ -119,7 +135,6 @@ And To Build The AppImage Run
 ## Todo
 - [ ] Improve UI
 - [ ] Work On Reducing Binary Sizes (Reduced A bit)
-- [ ] Add Support For Installing Directly Via URLS
 - [ ] Add 32 Bit Builds
 - [ ] Add Auto Updater Which Can Update The Bread Itself
 - [x] Add `--version` To Get The Version (Done in v0.2.2)
