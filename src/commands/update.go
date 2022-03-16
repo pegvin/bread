@@ -21,8 +21,8 @@ var NoUpdateInfo = errors.New("there is no update information")
 
 // Function Which Will Be Executed When `update` is called.
 func (cmd *UpdateCmd) Run() (err error) {
-	if cmd.All {
-		cmd.Targets, err = getAllTargets()
+	if cmd.All { // if `update all`
+		cmd.Targets, err = getAllTargets() // Load all the application info into targets
 		if err != nil {
 			return err
 		}
