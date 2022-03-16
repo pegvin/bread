@@ -38,5 +38,5 @@ AppDir:
 
 AppImage:
   update-information: 'gh-releases-zsync|DEVLOPRR|bread|latest|*x86_64.AppImage.zsync'
-  sign-key: None
+  sign-key: 7E4721742F517EFD736F5EDC0BFD592D76127EDF
   arch: x86_64
