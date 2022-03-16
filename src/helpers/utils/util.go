@@ -79,13 +79,13 @@ func PromptBinarySelection(downloadLinks []BinaryUrl) (result *BinaryUrl, err er
 	}
 
 	prompt := promptui.Select{
-		Label: "Select binary to download",
+		Label: "Select an AppImage to install",
 		Items: downloadLinks,
 		Templates: &promptui.SelectTemplates{
 			Label:    "   {{ .FileName }}",
-			Active:   "\U00002705 {{ .FileName }}",
+			Active:   "\U00002713 {{ .FileName }}",
 			Inactive: "   {{ .FileName }}",
-			Selected: "\U00002705 {{ .FileName }}"},
+			Selected: "\U00002713 {{ .FileName }}"},
 	}
 
 	i, _, err := prompt.Run()
