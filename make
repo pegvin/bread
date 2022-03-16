@@ -11,7 +11,7 @@ VERSION="0.2.3"
 
 if [[ $1 = '' ]]; then
 	echo "Compiling '$ENTRY_FILE' into '$DIST'"
-	${COMPILER} build -o ${OUTPUT} -v ${ENTRY_FILE}
+	${COMPILER} build -ldflags "-s -w" -o ${OUTPUT} -v ${ENTRY_FILE}
 	echo "Compiled Successfully into '$OUTPUT'"
 elif [[ $1 = 'appimage' ]]; then
 	echo "Building AppImage"
