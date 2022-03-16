@@ -15,20 +15,20 @@ type ListCmd struct {
 
 // Function which will be executed when `list` is called.
 func (r *ListCmd) Run() error {
-	registry, err := utils.OpenRegistry()
+	registry, err := utils.OpenRegistry() // Open The Registry
 	if err != nil {
 		return err
 	}
-	defer registry.Close()
+	defer registry.Close() // Close the registry before function return
 
-	registry.Update()
-	var buf bytes.Buffer
+	registry.Update() // Update the registry with latest application info
+	var buf bytes.Buffer // Buffer which will hold the table
 	tabWriter := ansiterm.NewTabWriter(&buf, 20, 4, 0, ' ', 0)
 	tabWriter.SetColorCapable(true)
 
 	tabWriter.SetForeground(ansiterm.Green)
-	_, _ = tabWriter.Write([]byte("Host\t File Name\t SHA1\n"))
-	_, _ = tabWriter.Write([]byte("----\t ---------\t ----\n"))
+	_, _ = tabWriter.Write([]byte("Identifier\t File Name\t SHA1 HASH\n"))
+	_, _ = tabWriter.Write([]byte("----------\t ---------\t ---------\n"))
 
 	tabWriter.SetForeground(ansiterm.DarkGray)
 
