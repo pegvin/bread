@@ -32,7 +32,7 @@ func main() {
 			Compact: true,
 		}),
 		kong.Vars{
-			"version": "Bread v0.2.2",
+			"version": "Bread v0.2.3",
 		})
 	// Call the Run() method of the selected parsed command.
 	err := ctx.Run()
