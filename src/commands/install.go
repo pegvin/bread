@@ -59,15 +59,9 @@ func (cmd *InstallCmd) Run() (err error) {
 	cmd.createDesktopIntegration(targetFilePath)
 
 	// Print Signature Info If Exist.
-	signingEntity, _ := utils.VerifySignature(targetFilePath)
-	if signingEntity != nil {
-		fmt.Println("AppImage signed by:")
-		for _, v := range signingEntity.Identities {
-			fmt.Println("\t", v.Name)
-		}
-	}
+	utils.ShowSignature(targetFilePath)
 
-	return
+	return nil
 }
 
 // Function To Add Installed Program To Registry (Installed App information is stored in here).
