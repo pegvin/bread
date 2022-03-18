@@ -4,6 +4,7 @@ Install, update and remove AppImage from GitHub using your CLI. (Fork of [AppIma
 
 ## Features
 - Install from the GitHub Releases
+- Run Applications From Remote Without Installing Them
 - Update with ease
 
 ## Installation
