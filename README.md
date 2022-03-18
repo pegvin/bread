@@ -10,12 +10,12 @@ Install, update and remove AppImage from GitHub using your CLI. (Fork of [AppIma
 
 With Curl:
 ```bash
-sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.2.3/bread-0.2.3-x86_64.AppImage -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread
+sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.3.4/bread-0.3.4-x86_64.AppImage -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread
 ```
 
 With Wget:
 ```bash
-sudo wget -O /usr/local/bin/bread https://github.com/DEVLOPRR/bread/releases/download/v0.2.3/bread-0.2.3-x86_64.AppImage && sudo chmod +x /usr/local/bin/bread
+sudo wget -O /usr/local/bin/bread https://github.com/DEVLOPRR/bread/releases/download/v0.3.4/bread-0.3.4-x86_64.AppImage && sudo chmod +x /usr/local/bin/bread
 ```
 
 ---
@@ -42,6 +42,20 @@ rm -v /usr/local/bin/bread
 Installing a App from GitHub Release
 ```bash
 bread install user/repo
+```
+
+---
+
+### Running
+
+You can run a Application from remote without installing
+```bash
+bread run user/repo
+```
+
+Since all these applications are cached so that it isn't downloaded again, if you want you can clean the cache too.
+```bash
+bread clean
 ```
 
 ---
@@ -104,9 +118,11 @@ Flags:
 
 Commands:
   install    Install an application.
+  run        Run an application from Remote.
   list       List installed applications.
   remove     Remove an application.
   update     Update an application.
+  clean      Clean all the cache.
 
 Run "bread <command> --help" for more information on a command.
 ```
@@ -147,7 +163,7 @@ And To Build The AppImage Run
 
 ## Todo
 - [ ] Improve UI
-- [ ] Make AppImages Runnable From Remote Without Installing
+- [x] Make AppImages Runnable From Remote Without Installing (Done in v0.3.4)
 - [ ] Work On Reducing Binary Sizes (Reduced A bit)
 - [ ] Add 32 Bit Builds
 - [ ] Add Auto Updater Which Can Update The Bread Itself
