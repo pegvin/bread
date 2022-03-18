@@ -9,15 +9,17 @@ import (
 type VersionFlag bool
 
 var cli struct {
-	Install  commands.InstallCmd  `cmd:"" help:"Install an application."`
-	List     commands.ListCmd     `cmd:"" help:"List installed applications."`
-	Remove   commands.RemoveCmd   `cmd:"" help:"Remove an application."`
-	Update   commands.UpdateCmd   `cmd:"" help:"Update an application."`
-	Version  VersionFlag          `name:"version" help:"Print version information and quit"`
+	Install    commands.InstallCmd    `cmd:"" help:"Install an application."`
+	Run        commands.RunCmd        `cmd:"" help:"Run an application from Remote."`
+	List       commands.ListCmd       `cmd:"" help:"List installed applications."`
+	Remove     commands.RemoveCmd     `cmd:"" help:"Remove an application."`
+	Update     commands.UpdateCmd     `cmd:"" help:"Update an application."`
+	Clean      commands.CleanCmd      `cmd:"" help:"Clean all the cache."`
+	Version    VersionFlag            `name:"version" help:"Print version information and quit"`
 }
 
 func (v VersionFlag) BeforeApply(app *kong.Kong, vars kong.Vars) error {
-	fmt.Println(vars["version"])
+	fmt.Println("Bread v" + vars["version"])
 	app.Exit(0)
 	return nil
 }
@@ -32,7 +34,7 @@ func main() {
 			Compact: true,
 		}),
 		kong.Vars{
-			"version": "Bread v0.2.3",
+			"version": "0.3.4",
 		})
 	// Call the Run() method of the selected parsed command.
 	err := ctx.Run()
