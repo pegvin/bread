@@ -25,6 +25,20 @@ type BinaryUrl struct {
 	Url      string
 }
 
+func ShowSignature(filePath string) (error) {
+	signingEntity, err := VerifySignature(filePath)
+	if err != nil {
+		return err
+	}
+	if signingEntity != nil {
+		fmt.Println("AppImage signed by:")
+		for _, v := range signingEntity.Identities {
+			fmt.Println("\t", v.Name)
+		}
+	}
+	return nil
+}
+
 func MakeApplicationsDirPath() (string, error) {
 	usr, err := user.Current()
 	if err != nil {
@@ -73,6 +87,41 @@ func DownloadAppImage(url string, filePath string) error {
 	return err
 }
 
+func MakeTargetFilePath(link *BinaryUrl) (string, error) {
+	applicationsPath, err := MakeApplicationsDirPath()
+	if err != nil {
+		return "", err
+	}
+
+	filePath := filepath.Join(applicationsPath, link.FileName)
+	return filePath, nil
+}
+
+func MakeTempFilePath(link *BinaryUrl) (string, error) {
+	applicationsPath, err := MakeTempAppDirPath()
+	if err != nil {
+		return "", err
+	}
+
+	filePath := filepath.Join(applicationsPath, link.FileName)
+	return filePath, nil
+}
+
+func MakeTempAppDirPath() (string, error) {
+	TempApplicationDirPath, err := MakeApplicationsDirPath()
+	if err != nil {
+		return "", err
+	}
+
+	TempApplicationDirPath = filepath.Join(TempApplicationDirPath, "run-cache")
+	err = os.MkdirAll(TempApplicationDirPath, os.ModePerm)
+	if err != nil {
+		return "", err
+	}
+
+	return TempApplicationDirPath, nil
+}
+
 func PromptBinarySelection(downloadLinks []BinaryUrl) (result *BinaryUrl, err error) {
 	if len(downloadLinks) == 1 {
 		return &downloadLinks[0], nil
@@ -94,16 +143,6 @@ func PromptBinarySelection(downloadLinks []BinaryUrl) (result *BinaryUrl, err er
 	}
 
 	return &downloadLinks[i], nil
-}
-
-func MakeTargetFilePath(link *BinaryUrl) (string, error) {
-	applicationsPath, err := MakeApplicationsDirPath()
-	if err != nil {
-		return "", err
-	}
-
-	filePath := filepath.Join(applicationsPath, link.FileName)
-	return filePath, nil
 }
 
 func ReadUpdateInfo(appImagePath string) (string, error) {
