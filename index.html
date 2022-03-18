@@ -17,8 +17,8 @@
 			<h1 id="projectTitle">Bread</h1>
 			<h2 id="projectTagline">Install, update and remove AppImage from GitHub using your CLI</h2>
 			<section id="downloads">
-				<a href="https://github.com/DEVLOPRR/bread/archive/refs/tags/v0.2.3.zip" class="tar_download" title="Download The Source Code As tar.gz file"></a>
-				<a href="https://github.com/DEVLOPRR/bread/archive/refs/tags/v0.2.3.zip" class="zip_download" title="Download The Source Code As zip file"></a>
+				<a href="https://github.com/DEVLOPRR/bread/archive/refs/tags/v0.3.4.tar.gz" class="tar_download" title="Download The Source Code As tar.gz file"></a>
+				<a href="https://github.com/DEVLOPRR/bread/archive/refs/tags/v0.3.4.zip" class="zip_download" title="Download The Source Code As zip file"></a>
 			</section>
 		</header>
 	</div>
@@ -36,14 +36,20 @@
 
 			<h2>Installation</h2>
 			<p>With Curl</p>
-			<pre>sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.2.3/bread-0.2.3-x86_64.AppImage -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread</pre>
+			<pre>sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.3.4/bread-0.3.4-x86_64.AppImage -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread</pre>
 			<p>With Wget</p>
-			<pre>sudo wget -O /usr/local/bin/bread https://github.com/DEVLOPRR/bread/releases/download/v0.2.3/bread-0.2.3-x86_64.AppImage && sudo chmod +x /usr/local/bin/bread</pre>
+			<pre>sudo wget -O /usr/local/bin/bread https://github.com/DEVLOPRR/bread/releases/download/v0.3.4/bread-0.3.4-x86_64.AppImage && sudo chmod +x /usr/local/bin/bread</pre>
 			<hr>
 			<h2>Usage</h2>
 
 			<h4>Install a application</h4>
 			<pre>bread install user/repo</pre>
+
+			<h4>Run a application from remote</h4>
+			<pre>bread run user/repo</pre>
+
+			<h4>Clean download cache</h4>
+			<pre>bread clean</pre>
 
 			<h4>Remove a application</h4>
 			<pre>bread remove user/repo</pre>
