@@ -147,6 +147,7 @@ And To Build The AppImage Run
 
 ## Todo
 - [ ] Improve UI
+- [ ] Make AppImages Runnable From Remote Without Installing
 - [ ] Work On Reducing Binary Sizes (Reduced A bit)
 - [ ] Add 32 Bit Builds
 - [ ] Add Auto Updater Which Can Update The Bread Itself
