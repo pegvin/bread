@@ -29,6 +29,7 @@ func (cmd *UpdateCmd) Run() (err error) {
 	}
 
 	for _, target := range cmd.Targets {
+		target = strings.ToLower(target)
 		if len(strings.Split(target, "/")) < 2 {
 			target = target + "/" + target
 		}

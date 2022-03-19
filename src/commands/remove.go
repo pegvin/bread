@@ -14,6 +14,7 @@ type RemoveCmd struct {
 
 // Function which will be executed when `remove` is called.
 func (cmd *RemoveCmd) Run() (err error) {
+	cmd.Target = strings.ToLower(cmd.Target)
 	registry, err := utils.OpenRegistry() // Open The Registry
 	if err != nil {
 		return err
