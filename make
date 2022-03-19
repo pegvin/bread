@@ -7,7 +7,7 @@ BINARY="bread"
 DIST="build"
 ENTRY_FILE="src/main.go"
 OUTPUT="$DIST/$BINARY"
-VERSION="0.3.4"
+VERSION="0.3.5"
 
 if [[ $1 = '' ]]; then
 	echo "Compiling '$ENTRY_FILE' into '$DIST'"
