@@ -7,6 +7,16 @@
 	padding: 0;
 }
 
+noscript {
+	background-color: #333;
+	text-align: center;
+	z-index: 999;
+	position: fixed;
+	display: block;
+	height: 100vh;
+	width: 100vw;
+}
+
 :root {
 	font-size: 16px;
 }
@@ -177,6 +187,7 @@ hr {
 }
 
 pre {
+	display: block;
 	max-height: 500px;
 	overflow: auto;
 	margin: 20px 0;
