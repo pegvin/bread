@@ -34,7 +34,7 @@ func main() {
 			Compact: true,
 		}),
 		kong.Vars{
-			"version": "0.3.4",
+			"version": "0.3.5",
 		})
 	// Call the Run() method of the selected parsed command.
 	err := ctx.Run()
