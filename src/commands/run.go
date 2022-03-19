@@ -4,12 +4,50 @@ import (
 	"bread/src/helpers/repos"
 	"bread/src/helpers/utils"
 
+	"fmt"
 	"os"
-	"os/exec"
+	goCmd "github.com/go-cmd/cmd"
 )
 
 type RunCmd struct {
 	Target string `arg:"" name:"target" help:"Target To Run" type:"string"`
+	Arguments []string `arg:"" passthrough:"" optional:"" name:"arguments" help:"Argument to pass to the program" type:"string"`
+}
+
+func executeCmd(target string, arguments []string) {
+	options := goCmd.Options{
+		Buffered: false,
+		Streaming: true,
+	}
+	runCmd := goCmd.NewCmdOptions(options, target, arguments...)
+
+	// Print STDOUT and STDERR lines streaming from Cmd
+	doneChan := make(chan struct{})
+	go func() {
+		defer close(doneChan)
+		for runCmd.Stdout != nil || runCmd.Stderr != nil {
+			select {
+			case line, open := <-runCmd.Stdout:
+				if !open {
+					runCmd.Stdout = nil
+					continue
+				}
+				fmt.Println(line)
+			case line, open := <-runCmd.Stderr:
+				if !open {
+					runCmd.Stderr = nil
+					continue
+				}
+				fmt.Fprintln(os.Stderr, line)
+			}
+		}
+	}()
+
+	// Run and wait for Cmd to return, discard Status
+	<-runCmd.Start()
+
+	// Wait for goroutine to print everything
+	<-doneChan
 }
 
 func (cmd *RunCmd) Run() (err error) {
@@ -39,8 +77,7 @@ func (cmd *RunCmd) Run() (err error) {
 
 	// Check if the FilePath Exist, Show error
 	if _, err = os.Stat(targetFilePath); err == nil {
-		command := exec.Command(targetFilePath)
-		command.Run()
+		executeCmd(targetFilePath, cmd.Arguments)
 		return nil
 	}
 
@@ -53,6 +90,6 @@ func (cmd *RunCmd) Run() (err error) {
 	// Print Signature Info If Exist.
 	utils.ShowSignature(targetFilePath)
 
-	command := exec.Command(targetFilePath)
-	return command.Run()
+	executeCmd(targetFilePath, cmd.Arguments)
+	return nil
 }
