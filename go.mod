@@ -5,6 +5,7 @@ go 1.18
 require (
 	github.com/AppImageCrafters/appimage-update v0.1.5
 	github.com/alecthomas/kong v0.5.0
+	github.com/go-cmd/cmd v1.4.0
 	github.com/google/go-github/v31 v31.0.0
 	github.com/juju/ansiterm v0.0.0-20210929141451-8b71cc96ebdc
 	github.com/manifoldco/promptui v0.9.0
