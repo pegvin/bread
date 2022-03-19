@@ -6,19 +6,37 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="title" content="Bread">
 	<meta name="description" content="Install, update and remove AppImage from GitHub using your CLI">
-	<title>Bread - Install, update and remove AppImage from GitHub using your CLI</title>
+	<title>Bread - Install, update, remove & run AppImage from GitHub using your CLI</title>
 	<link rel="shortcut icon" href="https://raw.githubusercontent.com/DEVLOPRR/bread/main/.github/bread.svg" type="image/x-icon">
 	<link rel="stylesheet" href="./styles/index.css">
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<link rel="stylesheet" href="./lib/accordion.css">
+	<script src="./lib/accordion.min.js"></script>
+	<script defer>
+		$(document).ready(function () {
+			$("#usage-accordion").accordionjs({
+				closeAble: true,
+				activeIndex: false,
+				closeOther: false
+			});
+		})
+	</script>
 </head>
 <body>
+	<noscript>
+		<div style="margin-top: 40vh; padding: 0 20px;">
+			<h1>JavaScript is Required To View This Page</h1>
+		</div>
+	</noscript>
 	<div class="headerWrapper">
 		<header class="inner">
 			<a id="forkmeBanner" href="https://github.com/DEVLOPRR/bread">View on GitHub</a>
 			<h1 id="projectTitle">Bread</h1>
-			<h2 id="projectTagline">Install, update and remove AppImage from GitHub using your CLI</h2>
+			<h2 id="projectTagline">Install, update, remove & run AppImage from your CLI</h2>
 			<section id="downloads">
-				<a href="https://github.com/DEVLOPRR/bread/archive/refs/tags/v0.3.4.tar.gz" class="tar_download" title="Download The Source Code As tar.gz file"></a>
-				<a href="https://github.com/DEVLOPRR/bread/archive/refs/tags/v0.3.4.zip" class="zip_download" title="Download The Source Code As zip file"></a>
+				<a href="https://github.com/DEVLOPRR/bread/archive/refs/tags/v0.3.5.tar.gz" class="tar_download" title="Download The Source Code As tar.gz file"></a>
+				<a href="https://github.com/DEVLOPRR/bread/archive/refs/tags/v0.3.5.zip" class="zip_download" title="Download The Source Code As zip file"></a>
 			</section>
 		</header>
 	</div>
@@ -27,6 +45,7 @@
 			<h2>Features</h2>
 			<ul>
 				<li>Install From GitHub Release</li>
+				<li>Run Applications From Remote Without Installing Them</li>
 				<li>Update With Ease</li>
 			</ul>
 			<br>
@@ -36,32 +55,69 @@
 
 			<h2>Installation</h2>
 			<p>With Curl</p>
-			<pre>sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.3.4/bread-0.3.4-x86_64.AppImage -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread</pre>
+			<pre>sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.3.5/bread-0.3.4-x86_64.AppImage -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread</pre>
 			<p>With Wget</p>
-			<pre>sudo wget -O /usr/local/bin/bread https://github.com/DEVLOPRR/bread/releases/download/v0.3.4/bread-0.3.4-x86_64.AppImage && sudo chmod +x /usr/local/bin/bread</pre>
+			<pre>sudo wget -O /usr/local/bin/bread https://github.com/DEVLOPRR/bread/releases/download/v0.3.5/bread-0.3.4-x86_64.AppImage && sudo chmod +x /usr/local/bin/bread</pre>
 			<hr>
 			<h2>Usage</h2>
 
-			<h4>Install a application</h4>
-			<pre>bread install user/repo</pre>
+			<ul id="usage-accordion" class="accordionjs">
+				<li>
+					<div>Install a application</div>
+					<div>
+						<p>To install an Application from GitHub you can use the install command where user is the github repo owner and repo is the repository name</p>
+						<pre>bread install user/repo</pre>
+					</div>
+				</li>
 
-			<h4>Run a application from remote</h4>
-			<pre>bread run user/repo</pre>
+				<li>
+					<div>Run a application from remote</div>
+					<div>
+						<p>If you want to run a application from remote without installing it you can use the run command</p>
+						<pre>bread run user/repo</pre>
+						<p>You can pass CLI arguments to the application too like this <code>bread run user/repo -- --arg1 --arg2</code></p>
+						<p>You can clear the download cache using clean command <code>bread clean</code>, Since all the applications you run from remote are cached so that it isn't downloaded everytime</p>
+					</div>
+				</li>
 
-			<h4>Clean download cache</h4>
-			<pre>bread clean</pre>
+				<li>
+					<div>Remove a application</div>
+					<div>
+						<p>you can remove a installed application using the remove command</p>
+						<pre>bread remove user/repo</pre>
+					</div>
+				</li>
 
-			<h4>Remove a application</h4>
-			<pre>bread remove user/repo</pre>
+				<li>
+					<div>Update a application</div>
+					<div>
+						<p>You can update a application using the update command</p>
+						<pre>bread update user/repo</pre>
+						<p>if you just want to check if update is available you can use the <code>--check</code> flag</p>
+						<pre>bread update user/repo --check</pre>
+						<p>if you want to update all the applications you can use the <code>--all</code> flag</p>
+						<pre>bread update --all</pre>
+						<p>the <code>--check</code> & <code>--all</code> flag can be used together</p>
+						<pre>bread update --all --check</pre>
+					</div>
+				</li>
 
-			<h4>Update a application</h4>
-			<pre>bread update user/repo</pre>
+				<li>
+					<div>List all the installed application</div>
+					<div>
+						<p>You can list all the installed applications using list command</p>
+						<pre>bread list</pre>
+					</div>
+				</li>
 
-			<h4>List all the installed application</h4>
-			<pre>bread list</pre>
+				<li>
+					<div>Note</div>
+					<div>
+						<p>Often there are many times when the GitHub user and repo both are same, for example <a href="https://github.com/LibreSprite/LibreSprite">libresprite</a>, so in this case you can just specify single name like this <code>bread install libresprite</code>, this works with all the commands</p>
+					</div>
+				</li>
+			</ul>
 
-			<h5>NOTE</h5>
-			<p>if you are trying to install/remove/update a application where the <code>user</code> and <code>repo</code> are same, like <code>bread install <a href="https://github.com/libresprite/libresprite">libresprite/libresprite</a></code> can be written as <code>bread install libresprite</code></p>
 			<hr>
 
 			<h2>Building from source</h2>
