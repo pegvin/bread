@@ -1,6 +1,6 @@
 # Bread ![:bread:](./.github/bread.svg)
 
-Install, update and remove AppImage from GitHub using your CLI. (Fork of [AppImage ClI Tool](https://github.com/AppImageCrafters/appimage-cli-tool))
+Install, update, remove & run AppImage from GitHub using your CLI. (Fork of [AppImage ClI Tool](https://github.com/AppImageCrafters/appimage-cli-tool))
 
 ## Features
 - Install from the GitHub Releases
