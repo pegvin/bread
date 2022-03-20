@@ -135,6 +135,13 @@ Run "bread <command> --help" for more information on a command.
 
 ---
 
+## How it works?
+Bread installs all the applications inside the `Applications` directory in your Linux Home Directory `~`, inside this directory there can be also a directory named `run-cache` which contains all the appimages you've run from the remote via the `bread run` command.
+
+In the `Applications` there is can also be a file named `.registry.json` which contains information related to the installed applications!
+
+---
+
 ## Building From Source
 
 Make Sure You Have Go version 1.18.x & [AppImage Builder](https://appimage-builder.readthedocs.io/en/latest/) Installed.
