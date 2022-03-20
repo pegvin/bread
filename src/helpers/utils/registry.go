@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	updateUtils "github.com/AppImageCrafters/appimage-update/util"
+	updateUtils "github.com/DEVLOPRR/appimage-update/util"
 )
 
 type RegistryEntry struct {

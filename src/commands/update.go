@@ -6,8 +6,8 @@ import (
 	"strings"
 
 	"bread/src/helpers/utils"
-	update "github.com/AppImageCrafters/appimage-update"
-	"github.com/AppImageCrafters/appimage-update/updaters"
+	update "github.com/DEVLOPRR/appimage-update"
+	"github.com/DEVLOPRR/appimage-update/updaters"
 )
 
 type UpdateCmd struct {
