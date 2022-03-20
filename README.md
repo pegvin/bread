@@ -11,12 +11,12 @@ Install, update, remove & run AppImage from GitHub using your CLI. (Fork of [App
 
 With Curl:
 ```bash
-sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.3.6/bread-0.3.6-x86_64.AppImage -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread
+sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.3.7/bread-0.3.6-x86_64.AppImage -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread
 ```
 
 With Wget:
 ```bash
-sudo wget -O /usr/local/bin/bread https://github.com/DEVLOPRR/bread/releases/download/v0.3.6/bread-0.3.6-x86_64.AppImage && sudo chmod +x /usr/local/bin/bread
+sudo wget -O /usr/local/bin/bread https://github.com/DEVLOPRR/bread/releases/download/v0.3.7/bread-0.3.6-x86_64.AppImage && sudo chmod +x /usr/local/bin/bread
 ```
 
 ---
