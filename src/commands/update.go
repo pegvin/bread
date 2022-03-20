@@ -29,9 +29,10 @@ func (cmd *UpdateCmd) Run() (err error) {
 	}
 
 	for _, target := range cmd.Targets {
-		target = strings.ToLower(target)
 		if len(strings.Split(target, "/")) < 2 {
-			target = target + "/" + target
+			target = strings.ToLower(target + "/" + target)
+		} else if len(strings.Split(target, "/")) == 2 {
+			target = strings.ToLower(target)
 		}
 		entry, err := cmd.getRegistryEntry(target)
 		if err != nil {
@@ -67,14 +68,7 @@ func (cmd *UpdateCmd) Run() (err error) {
 			continue
 		}
 
-		signingEntity, _ := utils.VerifySignature(result)
-		if signingEntity != nil {
-			fmt.Println("AppImage signed by:")
-			for _, v := range signingEntity.Identities {
-				fmt.Println("\t", v.Name)
-			}
-		}
-
+		utils.ShowSignature(result)
 		fmt.Println("Update downloaded to: " + result)
 	}
 
