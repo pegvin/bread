@@ -116,7 +116,7 @@ Run "bread <command> --help" for more information on a command.
 ## File/Folder Layout
 Bread installs all the applications inside the `Applications` directory in your Linux Home Directory `~`, inside this directory there can be also a directory named `run-cache` which contains all the appimages you've run from the remote via the `bread run` command.
 
-In the `Applications` there is can also be a file named `.registry.json` which contains information related to the installed applications!
+In the `Applications` there is also a file named `.registry.json` which contains information related to the installed applications!
 
 ---
 
