@@ -34,80 +34,58 @@ rm -v /usr/local/bin/bread
 
 ## Usage
 
-**NOTE** if the user and repo in `user/repo` are same then you can just specify the single name itself, which means `libresprite/libresprite` is equal to `libresprite`
+<details>
+  <summary>NOTE</summary>
+  <br>
+  <p>Often there are many times when the GitHub user and repo both are same, for example <a href="https://github.com/LibreSprite/LibreSprite" target="_blank">libresprite</a>, so in this case you can just specify single name like this <code>bread install libresprite</code>, this works with all the commands</p>
+</details>
 
----
+<details>
+  <summary>Install a application</summary>
+  <br>
+  <p>To install an Application from GitHub you can use the install command where user is the github repo owner and repo is the repository name</p>
+  <pre><code>bread install user/repo</code></pre>
+</details>
 
-### Installing
+<details>
+  <summary>Run a application from remote</summary>
+  <br>
+  <p>If you want to run a application from remote without installing it you can use the run command</p>
+  <pre><code>bread run user/repo</code></pre>
+  <p>You can pass CLI arguments to the application too like this</p>
+  <pre><code>bread run user/repo -- --arg1 --arg2</code></pre>
+  <p>You can clear the download cache using clean command <code>bread clean</code>, Since all the applications you run from remote are cached so that it isn't downloaded everytime</p>
+</details>
 
-Installing a App from GitHub Release
-```bash
-bread install user/repo
-```
+<details>
+  <summary>Remove a application</summary>
+  <br>
+  <p>you can remove a installed application using the remove command</p>
+  <pre><code>bread remove user/repo</code></pre>
+</details>
 
----
+<details>
+  <summary>Update a applicationn</summary>
+  <br>
+  <p>You can update a application using the update command</p>
+  <pre><code>bread update user/repo</code></pre>
 
-### Running
+  <p>if you just want to check if update is available you can use the <code>--check</code> flag</p>
+  <pre><code>bread update user/repo --check</code></pre>
 
-You can run a Application from remote without installing
-```bash
-bread run user/repo
-```
+  <p>if you want to update all the applications you can use the <code>--all</code> flag</p>
+  <pre><code>bread update --all</code></pre>
 
-You can also pass arguments to the application like this:
-```bash
-bread run user/repo -- --myArg1 --myArg2
-```
+  <p>the <code>--check</code> & <code>--all</code> flag can be used together</p>
+  <pre><code>bread update --all --check</code></pre>
+</details>
 
-Since all these applications are cached so that it isn't downloaded again, you can clean that cache too.
-```bash
-bread clean
-```
-
----
-
-### Updating
-
-Just Checking For Update
-```bash
-bread update user/repo --check
-```
-
-Just Checking For All Updates
-```bash
-bread update user/repo --check --all
-```
-
-Updating A Single App
-```bash
-bread update user/repo
-```
-
-Updating All Of The Apps
-```bash
-bread update --all
-```
-
----
-
-### Removing
-
-Completely Removing a installed app
-```bash
-bread remove user/repo
-```
-
-Only De-Integrating The App But Not Removing It 
-```bash
-bread remove user/repo --keep-file
-```
-
----
-
-### List all of the installed apps
-```bash
-bread list
-```
+<details>
+  <summary>List all the installed application</summary>
+  <br>
+  <p>You can list all the installed applications using list command</p>
+  <pre><code>bread list</code></pre>
+</details>
 
 ---
 
