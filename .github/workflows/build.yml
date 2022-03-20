@@ -2,8 +2,9 @@
 name: Build Action
 on: 
   push:
+    branches: [ master ]
     paths:
-    - 'src/**'
+    - './src/**/*.go'
 
 jobs:
   test-build:
