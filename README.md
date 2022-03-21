@@ -9,15 +9,20 @@ Install, update, remove & run AppImage from GitHub using your CLI. (Fork of [App
 
 ## Installation
 
-With Curl:
+If you already have installed or installing [LibAppImage](https://repology.org/project/libappimage/versions) you can just install bread binary with Curl:
+
 ```bash
-sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.3.7/bread-0.3.7-x86_64.AppImage -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread
+sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.4.1/bread-0.4.1-x86_64 -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread
 ```
 
-With Wget:
+<br>
+
+If LibAppImage is not available for your distribution or you don't want to install it specially for this software, you can get the bread's AppImage which contains LibAppImage, using Curl:
 ```bash
-sudo wget -O /usr/local/bin/bread https://github.com/DEVLOPRR/bread/releases/download/v0.3.7/bread-0.3.7-x86_64.AppImage && sudo chmod +x /usr/local/bin/bread
+sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.4.1/bread-0.4.1-x86_64.AppImage -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread
 ```
+
+***It is recommended to install the Binary instead of AppImage, if your distribution provides LibAppImage Version 1.0.2 Or Higher.***
 
 ---
 
