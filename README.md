@@ -81,6 +81,13 @@ rm -v /usr/local/bin/bread
 </details>
 
 <details>
+  <summary>Search for an application</summary>
+  <br>
+  <p>You can search for a application from the [AppImage](https://appimage.github.io) API</p>
+  <pre><code>bread search "Your search text"</code></pre>
+</details>
+
+<details>
   <summary>List all the installed application</summary>
   <br>
   <p>You can list all the installed applications using list command</p>
