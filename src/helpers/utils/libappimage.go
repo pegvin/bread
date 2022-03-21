@@ -26,14 +26,18 @@ type LibAppImage interface {
 
 // Function which loads up libappimage from the system, libappimage comes packed with the imageHub AppImage.
 func loadLibAppImage() (*dl.DL, error) {
-	lib, err := dl.Open("libappimage.so.1.0", 0)
-	if err == nil {
-		return lib, nil
+	// libappimage versions from latest to oldest, so that we can load the latest version
+	sharedLibList := [17]string{
+		".1.0.4", ".1.0.3", ".1.0.1", ".1.0.2",
+		".1.0", ".0.1.9", ".0.1.8", ".0.1.7", ".0.1.6", ".0.1.5",
+		".0.1.4", ".0.1.3", ".0.1.2", ".0.1.1", ".0.1.0", ".0", "",
 	}
 
-	lib, err = dl.Open("libappimage.so", 0)
-	if err == nil {
-		return lib, nil
+	for index := range sharedLibList {
+		lib, err := dl.Open("libappimage.so" + sharedLibList[index], 0)
+		if err == nil {
+			return lib, nil
+		}
 	}
 
 	return nil, fmt.Errorf("libappimage not found, desktop integration is disabled")
