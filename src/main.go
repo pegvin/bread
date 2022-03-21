@@ -19,7 +19,7 @@ var cli struct {
 }
 
 func (v VersionFlag) BeforeApply(app *kong.Kong, vars kong.Vars) error {
-	fmt.Println("Bread v" + vars["version"])
+	fmt.Println("Bread v" + vars["VERSION"])
 	app.Exit(0)
 	return nil
 }
@@ -34,7 +34,7 @@ func main() {
 			Compact: true,
 		}),
 		kong.Vars{
-			"version": "0.3.7",
+			"VERSION": "0.3.7",
 		})
 	// Call the Run() method of the selected parsed command.
 	err := ctx.Run()
