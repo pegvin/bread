@@ -17,7 +17,7 @@ sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.4.1/bread-0.
 
 <br>
 
-If LibAppImage is not available for your distribution or you don't want to install it specially for this software, you can get the bread's AppImage which contains LibAppImage, using Curl:
+If LibAppImage is not available for your distribution or you don't want to install it specially for this software, you can get the bread's AppImage which contains LibAppImage v1.0.2, using Curl:
 ```bash
 sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.4.1/bread-0.4.1-x86_64.AppImage -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread
 ```
