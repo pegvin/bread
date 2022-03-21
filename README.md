@@ -89,27 +89,8 @@ rm -v /usr/local/bin/bread
 
 ---
 
-## Full usage
-
-```bash
-Usage: bread <command>
-
-Install, update and remove AppImage from GitHub using your CLI.
-
-Flags:
-  -h, --help       Show context-sensitive help.
-      --version    Print version information and quit
-
-Commands:
-  install    Install an application.
-  run        Run an application from Remote.
-  list       List installed applications.
-  remove     Remove an application.
-  update     Update an application.
-  clean      Clean all the cache.
-
-Run "bread <command> --help" for more information on a command.
-```
+## Tested On:
+- Ubuntu 20.04
 
 ---
 
