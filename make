@@ -7,7 +7,7 @@ BINARY="bread"
 DIST="build"
 ENTRY_FILE="src/main.go"
 OUTPUT="$DIST/$BINARY"
-VERSION="$(cat src/main.go | grep '"VERSION":' | grep -o '[0-9 .]*')" # Simple Hack To Get The Version Number From main.go file
+VERSION="$(cat src/main.go | grep '"VERSION":' | grep -o '[0-9 .]*' | xargs)" # Simple Hack To Get The Version Number From main.go file
 
 if [[ $1 = '' || $1 = '--prod' ]]; then
 	echo "Compiling '$ENTRY_FILE' into '$DIST'"
