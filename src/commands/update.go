@@ -11,7 +11,7 @@ import (
 )
 
 type UpdateCmd struct {
-	Targets []string `arg:"" optional:"" name:"targets" help:"Updates the target applications." type:"string"`
+	Targets []string `arg:"" optional:"" name:"targets" help:"Update the target/all applications." type:"string"`
 
 	Check bool `help:"Only check for updates."`
 	All   bool `help:"Update all applications."`
