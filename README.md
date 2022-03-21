@@ -132,6 +132,36 @@ And To Build The AppImage Run
 ```
 
 ---
+## Build Script
+The `make` bash script can build your go code, make appimage out of it, and clean the left over stuff including the genrated builds.
+
+#### Building in Development Mode
+This will build the go code into a binary inside the `build` folder
+```
+./make
+```
+
+#### Building in Production Mode
+Building for production requires passing `--prod` flag which will enable some compiler options resulting in a small build size.
+```
+./make --prod
+```
+
+#### Building the AppImage
+Bread requires libappimage0 for integrating your apps to desktop, which is done via libappimage, to make End user's life easier we package the libappimage with bread and that's why we build the binaries into AppImages so that user doesn't need to install anything.
+
+To make a appimage out the pre built binaries
+```
+./make appimage
+```
+
+#### Get Dependency
+To install the dependencies require to build go binary
+```
+./make get-deps
+```
+
+---
 
 ## Todo
 - [ ] Improve UI
