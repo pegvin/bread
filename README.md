@@ -102,7 +102,8 @@ rm -v /usr/local/bin/bread
 ---
 
 ## Tested On:
-- Ubuntu 20.04
+- Ubuntu 20.04 - by me
+- Arch Linux - by [my brother](https://github.com/idno34)
 
 ---
 
