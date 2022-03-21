@@ -14,6 +14,7 @@ var cli struct {
 	List       commands.ListCmd       `cmd:"" help:"List installed applications."`
 	Remove     commands.RemoveCmd     `cmd:"" help:"Remove an application."`
 	Update     commands.UpdateCmd     `cmd:"" help:"Update an application."`
+	Search     commands.SearchCmd     `cmd:"" help:"Search for appliation from appimage list."`
 	Clean      commands.CleanCmd      `cmd:"" help:"Clean all the cache."`
 	Version    VersionFlag            `name:"version" help:"Print version information and quit"`
 }
@@ -34,7 +35,7 @@ func main() {
 			Compact: true,
 		}),
 		kong.Vars{
-			"VERSION": "0.3.7",
+			"VERSION": "0.4.1",
 		})
 	// Call the Run() method of the selected parsed command.
 	err := ctx.Run()
