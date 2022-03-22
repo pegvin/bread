@@ -12,12 +12,14 @@ import (
 )
 
 type RegistryEntry struct {
-	Repo       string
-	FileSha1   string
-	AppName    string
-	AppVersion string
-	FilePath   string
-	UpdateInfo string
+	Repo          string
+	FileSha1      string
+	AppName       string
+	AppVersion    string
+	FilePath      string
+	UpdateInfo    string
+	IsTerminalApp bool
+	AppImageType  int
 }
 
 type Registry struct {
@@ -105,11 +107,6 @@ func (registry *Registry) Update() {
 		}
 	}
 }
-
-// func (registry *Registry) addFile(filePath string) {
-// 	entry := registry.createEntryFromFile(filePath)
-// 	_ = registry.Add(entry)
-// }
 
 // Function which creates a new entry in the registry from a file
 func (registry *Registry) createEntryFromFile(filePath string) RegistryEntry {
