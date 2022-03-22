@@ -88,7 +88,7 @@ rm -v /usr/local/bin/bread
 <details>
   <summary>Search for an application</summary>
   <br>
-  <p>You can search for a application from the [AppImage](https://appimage.github.io) API</p>
+  <p>You can search for a application from the <a href="https://appimage.github.io">AppImage</a> API</p>
   <pre><code>bread search "Your search text"</code></pre>
 </details>
 
