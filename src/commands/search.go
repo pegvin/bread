@@ -16,6 +16,7 @@ func (cmd *SearchCmd) Run(debug bool) (error) {
 	var err error
 	fmt.Println("Getting Latest List...")
 	err = utils.FetchAppImageListJson()
+	cmd.Name = strings.ToLower(cmd.Name)
 
 	jsonData, err := utils.ReadAppImageListJson()
 	if err != nil {
@@ -31,6 +32,8 @@ func (cmd *SearchCmd) Run(debug bool) (error) {
 	// This Loop Will Check if the name of description has our search target
 	for index := range jsonData.Items {
 		item := jsonData.Items[index]
+		item.Name = strings.ToLower(item.Name)
+		item.Description = strings.ToLower(item.Description)
 		if strings.Contains(item.Name, cmd.Name) || strings.Contains(item.Description, cmd.Name) {
 			// This loop will loop and check if the provider has a github link or not
 			for providerIndex := range item.Links {
@@ -39,12 +42,18 @@ func (cmd *SearchCmd) Run(debug bool) (error) {
 					p := bluemonday.StripTagsPolicy()
 					item.Description = p.Sanitize(item.Description)
 					// Get the first line of the description
-					item.Description = strings.Split(jsonData.Items[index].Description, "\n")[0]
+					item.Description = strings.Split(item.Description, ".")[0]
 
 					// Make the first element the github url
 					item.Links[0].Type = "github"
-					item.Links[0].Url = item.Links[providerIndex].Url
+					item.Links[0].Url = strings.ToLower(item.Links[providerIndex].Url)
 
+					// Try to convert the URL to short user/repo format
+					arrayUserRepo, err := utils.GetUserRepoFromUrl(item.Links[0].Url)
+					if err == nil {
+						item.Links[0].Url = strings.Join(arrayUserRepo[:], "/")
+					}
+				
 					// append it to the foundItems
 					foundItems = append(foundItems, item)
 					break
