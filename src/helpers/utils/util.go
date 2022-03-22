@@ -25,6 +25,11 @@ type BinaryUrl struct {
 	Url      string
 }
 
+type AppImageInfo struct {
+	IsTerminalApp bool
+	AppImageType int
+}
+
 func ShowSignature(filePath string) (error) {
 	signingEntity, err := VerifySignature(filePath)
 	if err != nil {
