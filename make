@@ -1,18 +1,20 @@
 #!/bin/bash
 
-set -e
+set -euo pipefail
 
 COMPILER="go"
 BINARY="bread"
 DIST="build"
+VERSION="$(cat src/main.go | grep '"VERSION":' | grep -o '[0-9 .]*' | xargs)" # Simple Hack To Get The Version Number From main.go file
 ENTRY_FILE="src/main.go"
 OUTPUT="$DIST/$BINARY"
-VERSION="$(cat src/main.go | grep '"VERSION":' | grep -o '[0-9 .]*' | xargs)" # Simple Hack To Get The Version Number From main.go file
+COMPRESSED_OUTPUT="$OUTPUT-$VERSION-x86_64"
 
 if [[ $1 = '' || $1 = '--prod' ]]; then
 	echo "Compiling '$ENTRY_FILE' into '$DIST'"
 	if [[ $1 = '--prod' ]]; then
 		${COMPILER} build -ldflags "-s -w" -o ${OUTPUT} -v ${ENTRY_FILE}
+		upx -9 -o ${COMPRESSED_OUTPUT} ${OUTPUT}
 	else
 		${COMPILER} build -o ${OUTPUT} -v ${ENTRY_FILE}
 	fi
@@ -23,6 +25,7 @@ elif [[ $1 = 'appimage' ]]; then
 elif [[ $1 = 'get-deps' ]]; then
 	echo "Getting Depedencies"
 	${COMPILER} mod tidy
+	go get -t -u ./...
 elif [[ $1 = 'clean' ]]; then
 	rm -rfv $DIST
 	rm -rfv appimage-builder-cache
