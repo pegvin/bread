@@ -18,6 +18,8 @@ import (
 	"os/signal"
 	"os/user"
 	"path/filepath"
+	"net/url"
+	"strings"
 )
 
 type BinaryUrl struct {
@@ -28,6 +30,25 @@ type BinaryUrl struct {
 type AppImageInfo struct {
 	IsTerminalApp bool
 	AppImageType int
+}
+
+func GetUserRepoFromUrl(gitHubUrl string) ([2]string, error) {
+	urlParsed, err := url.ParseRequestURI(gitHubUrl)
+	if err != nil {
+		return [2]string{"", ""}, err
+	}
+
+	if urlParsed.Host != "github.com" {
+		return [2]string{"", ""}, fmt.Errorf("invalid github url")
+	}
+
+	splitPaths := strings.Split(urlParsed.EscapedPath(), "/")
+
+	if len(splitPaths) < 3 {
+		return [2]string{"", ""}, fmt.Errorf("invalid github url")
+	}
+
+	return [2]string{splitPaths[1], splitPaths[2]}, nil
 }
 
 func ShowSignature(filePath string) (error) {
