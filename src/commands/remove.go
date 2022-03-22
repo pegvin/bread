@@ -3,6 +3,7 @@ package commands
 import (
 	"fmt"
 	"bread/src/helpers/utils"
+	"github.com/DEVLOPRR/libappimage-go"
 	"os"
 	"strings"
 )
@@ -13,7 +14,7 @@ type RemoveCmd struct {
 }
 
 // Function which will be executed when `remove` is called.
-func (cmd *RemoveCmd) Run() (err error) {
+func (cmd *RemoveCmd) Run(debug bool) (err error) {
 	cmd.Target = strings.ToLower(cmd.Target)
 	registry, err := utils.OpenRegistry() // Open The Registry
 	if err != nil {
@@ -33,7 +34,7 @@ func (cmd *RemoveCmd) Run() (err error) {
 		return fmt.Errorf("application not found \"" + cmd.Target + "\"")
 	}
 
-	err = removeDesktopIntegration(entry.FilePath) // Remove the application desktop integration
+	err = removeDesktopIntegration(entry.FilePath, debug) // Remove the application desktop integration
 	if err != nil {
 		fmt.Println("Desktop integration removal failed: " + err.Error())
 	}
@@ -52,8 +53,8 @@ func (cmd *RemoveCmd) Run() (err error) {
 }
 
 // Function which will remove the application desktop integration
-func removeDesktopIntegration(filePath string) error {
-	libAppImage, err := utils.NewLibAppImageBindings()
+func removeDesktopIntegration(filePath string, debug bool) error {
+	libAppImage, err := libappimagego.NewLibAppImageBindings()
 	if err != nil {
 		return err
 	}
@@ -62,5 +63,5 @@ func removeDesktopIntegration(filePath string) error {
 		return nil
 	}
 
-	return libAppImage.Unregister(filePath)
+	return libAppImage.Unregister(filePath, debug)
 }

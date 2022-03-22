@@ -50,7 +50,7 @@ func executeCmd(target string, arguments []string) {
 	<-doneChan
 }
 
-func (cmd *RunCmd) Run() (err error) {
+func (cmd *RunCmd) Run(debug bool) (err error) {
 	// Parse The user input
 	repo, err := repos.ParseTarget(cmd.Target)
 	if err != nil {
