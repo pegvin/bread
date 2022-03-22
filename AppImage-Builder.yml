@@ -2,7 +2,7 @@ version: 1
 script:
   - rm -rf AppDir | true
   - mkdir -p AppDir/bin AppDir/usr/share/icons/hicolor/scalable/apps/
-  - cp ./build/bread AppDir/bin
+  - cp ./build/bread-${BREAD_VERSION}-x86_64 AppDir/bin
   - cp .github/bread.svg AppDir/usr/share/icons/hicolor/scalable/apps/
 
 AppDir:
@@ -13,7 +13,7 @@ AppDir:
     name: bread
     icon: bread
     version: !ENV ${BREAD_VERSION}
-    exec: bin/bread
+    exec: bin/bread-${BREAD_VERSION}-x86_64
     exec_args: $@
 
   apt:
@@ -23,7 +23,7 @@ AppDir:
         key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x3b4fe6acc0b21f32'
       - sourceline: 'deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ bionic-updates main restricted universe multiverse'
       - sourceline: 'deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ bionic-backports main restricted universe multiverse'
-      - sourceline: 'deb http://archive.neon.kde.org/user bionic main'
+      - sourceline: 'deb http://archive.neon.kde.org/dev/stable bionic main'
         key_url: 'http://archive.neon.kde.org/public.key'
 
     include:
