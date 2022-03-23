@@ -185,8 +185,9 @@ To install the dependencies require to build go binary
 - [ ] Add 32 Bit Builds
 - [ ] Add Auto Updater Which Can Update The Bread Itself
 - [x] Add `--version` To Get The Version (Done in v0.2.2)
-- [ ] Mirrors:
-  - I Would Like To Introduce Concept Of Mirror Lists Which Contain The List Of AppImages With The Download URL, tho currently i am not working on it but in future i might.
+- [x] Mirrors:
+  - :heavy_multiplication_x: I Would Like To Introduce Concept Of Mirror Lists Which Contain The List Of AppImages With The Download URL, tho currently i am not working on it but in future i might.
+  - [x] I am dropping this idea, tho i've added a search command which can search for appimages from a central server API
 
 ---
 
