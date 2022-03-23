@@ -49,9 +49,9 @@ func (cmd *SearchCmd) Run(debug bool) (error) {
 					item.Links[0].Url = strings.ToLower(item.Links[providerIndex].Url)
 
 					// Try to convert the URL to short user/repo format
-					arrayUserRepo, err := utils.GetUserRepoFromUrl(item.Links[0].Url)
+					githubUserRepo, err := utils.GetUserRepoFromUrl(item.Links[0].Url)
 					if err == nil {
-						item.Links[0].Url = strings.Join(arrayUserRepo[:], "/")
+						item.Links[0].Url = githubUserRepo
 					}
 				
 					// append it to the foundItems
