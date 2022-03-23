@@ -52,7 +52,7 @@ func executeCmd(target string, arguments []string) {
 
 func (cmd *RunCmd) Run(debug bool) (err error) {
 	// Parse The user input
-	repo, err := repos.ParseTarget(cmd.Target)
+	repo, err := repos.ParseTarget(cmd.Target, "")
 	if err != nil {
 		return err
 	}
