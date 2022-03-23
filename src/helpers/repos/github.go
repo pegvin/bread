@@ -13,55 +13,72 @@ type GitHubRepo struct {
 	Project string
 	Release string
 	File    string
+	TagName string
 }
 
 // Function which parses string to a github repo information, adn returns a object and error (if any)
-func NewGitHubRepo(target string) (appInfo Application, err error) {
+func NewGitHubRepo(target string, tagName string) (appInfo Application, err error) {
 	appInfo = &GitHubRepo{}
-
-	// Take the `user/repo` and split `user` and `repo`
-	targetParts := strings.Split(target, "/")
 	ghSource := GitHubRepo{}
 
-	targetPartsLen := len(targetParts)
-	if targetPartsLen < 2 { // If input is not in format of `user/repo` assume `user` and `repo` are same
+	userRepo, err := utils.GetUserRepoFromUrl(target)
+	if err == nil {
+		userRepoSplitted := strings.Split(userRepo, "/")
 		ghSource = GitHubRepo{
-			User:    targetParts[0],
-			Project: targetParts[0],
+			User:    userRepoSplitted[0],
+			Project: userRepoSplitted[1],
+			TagName: tagName,
 		}
+		return &ghSource, nil
 	} else {
-		ghSource = GitHubRepo{
-			User:    targetParts[0],
-			Project: targetParts[1],
+		// Take the `user/repo` and split `user` and `repo`
+		targetParts := strings.Split(target, "/")
+
+		// If input is not in format of `user/repo` assume `user` and `repo` are same
+		if len(targetParts) < 2 {
+			ghSource = GitHubRepo{
+				User:    targetParts[0],
+				Project: targetParts[0],
+				TagName: tagName,
+			}
+		} else {
+			ghSource = GitHubRepo{
+				User:    targetParts[0],
+				Project: targetParts[1],
+				TagName: tagName,
+			}
 		}
-	}
 
-	if targetPartsLen > 2 {
-		ghSource.Release = targetParts[2]
+		return &ghSource, nil
 	}
-
-	if targetPartsLen > 3 {
-		ghSource.File = targetParts[3]
-	}
-
-	return &ghSource, nil
 }
 
 // Function to get the github repo id from the repo information
 func (g GitHubRepo) Id() string {
-	id := g.User + "/" + g.Project
-	return id
+	return g.User + "/" + g.Project
 }
 
 // Function which gets the latest appimage from github release
 func (g GitHubRepo) GetLatestRelease() (*Release, error) {
-	var downloadLinks []utils.BinaryUrl // Contains Download Links
-
 	client := github.NewClient(nil) // Client For Interacting with github api
 	// Get all the releases from the target
 	releases, _, err := client.Repositories.ListReleases(context.Background(), g.User, g.Project, nil)
 	if err != nil {
 		return nil, err
+	}
+
+	if g.TagName != "" {
+		releaseWithTagName := getReleaseFromTagName(releases, g.TagName)
+
+		if releaseWithTagName != nil {
+			appimageFiles := getAppImageFilesFromRelease(releaseWithTagName)
+			if len(appimageFiles) > 0 {
+				return &Release{
+					*releaseWithTagName.TagName,
+					appimageFiles,
+				}, nil
+			}
+		}	
 	}
 
 	// Filter out files which are not AppImage
@@ -70,16 +87,9 @@ func (g GitHubRepo) GetLatestRelease() (*Release, error) {
 			continue
 		}
 
-		for _, asset := range release.Assets {
-			if strings.HasSuffix(*asset.Name, ".AppImage") {
-				downloadLinks = append(downloadLinks, utils.BinaryUrl{
-					FileName: *asset.Name,
-					Url:      *asset.BrowserDownloadURL,
-				})
-			}
-		}
-
+		downloadLinks := getAppImageFilesFromRelease(release)
 		if len(downloadLinks) > 0 {
+			g.TagName = *release.TagName
 			return &Release{
 				*release.TagName,
 				downloadLinks,
@@ -112,4 +122,29 @@ func (g GitHubRepo) FallBackUpdateInfo() string {
 	}
 
 	return updateInfo
+}
+
+func getAppImageFilesFromRelease(release *github.RepositoryRelease) ([]utils.BinaryUrl) {
+	var downloadLinks []utils.BinaryUrl // Contains Download Links
+
+	for _, asset := range release.Assets {
+		if strings.HasSuffix(strings.ToLower(*asset.Name), ".appimage") {
+			downloadLinks = append(downloadLinks, utils.BinaryUrl{
+				FileName: *asset.Name,
+				Url:      *asset.BrowserDownloadURL,
+			})
+		}
+	}
+
+	return downloadLinks
+}
+
+func getReleaseFromTagName(releases []*github.RepositoryRelease, tagName string) (*github.RepositoryRelease) {
+	for _, release := range releases {
+		if *release.Draft { continue }
+		if tagName == *release.TagName {
+			return release
+		}
+	}
+	return nil
 }
