@@ -27,8 +27,8 @@ func (r *ListCmd) Run(debug bool) error {
 	tabWriter.SetColorCapable(true)
 
 	tabWriter.SetForeground(ansiterm.Green)
-	_, _ = tabWriter.Write([]byte("Identifier\t File Name\t SHA1 HASH\n"))
-	_, _ = tabWriter.Write([]byte("----------\t ---------\t ---------\n"))
+	_, _ = tabWriter.Write([]byte("User/Repo\t File Name\t SHA1 HASH\n"))
+	_, _ = tabWriter.Write([]byte("---------\t ---------\t ---------\n"))
 
 	tabWriter.SetForeground(ansiterm.DarkGray)
 

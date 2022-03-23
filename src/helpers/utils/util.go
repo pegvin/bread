@@ -32,6 +32,7 @@ type AppImageInfo struct {
 	AppImageType int
 }
 
+// Get the user/repo from a github url
 func GetUserRepoFromUrl(gitHubUrl string) (string, error) {
 	urlParsed, err := url.ParseRequestURI(gitHubUrl)
 	if err != nil {
@@ -51,6 +52,7 @@ func GetUserRepoFromUrl(gitHubUrl string) (string, error) {
 	return splitPaths[1] + "/" + splitPaths[2], nil
 }
 
+// Show signature of a given file
 func ShowSignature(filePath string) (error) {
 	signingEntity, err := VerifySignature(filePath)
 	if err != nil {
@@ -65,6 +67,7 @@ func ShowSignature(filePath string) (error) {
 	return nil
 }
 
+// Get the Applications directory absolute path
 func MakeApplicationsDirPath() (string, error) {
 	usr, err := user.Current()
 	if err != nil {
@@ -79,8 +82,9 @@ func MakeApplicationsDirPath() (string, error) {
 	return applicationsPath, nil
 }
 
+// Download appimage from a url to the given filePath
 func DownloadAppImage(url string, filePath string) error {
-	output, err := os.OpenFile(filePath, os.O_RDWR|os.O_CREATE, 0755)
+	output, err := os.OpenFile(filePath, os.O_RDWR|os.O_CREATE, 0755) // Make a new file with 755 permissions so that it is executable
 	if err != nil {
 		return err
 	}
@@ -113,6 +117,7 @@ func DownloadAppImage(url string, filePath string) error {
 	return err
 }
 
+// Get the file path of a file in applications folder
 func MakeTargetFilePath(link *BinaryUrl) (string, error) {
 	applicationsPath, err := MakeApplicationsDirPath()
 	if err != nil {
@@ -123,6 +128,7 @@ func MakeTargetFilePath(link *BinaryUrl) (string, error) {
 	return filePath, nil
 }
 
+// Make file path from a file in run-cache directory inside Applications directory
 func MakeTempFilePath(link *BinaryUrl) (string, error) {
 	applicationsPath, err := MakeTempAppDirPath()
 	if err != nil {
@@ -133,6 +139,7 @@ func MakeTempFilePath(link *BinaryUrl) (string, error) {
 	return filePath, nil
 }
 
+// Make folder run-cache inside Applications dir and return it's path
 func MakeTempAppDirPath() (string, error) {
 	TempApplicationDirPath, err := MakeApplicationsDirPath()
 	if err != nil {
@@ -148,6 +155,7 @@ func MakeTempAppDirPath() (string, error) {
 	return TempApplicationDirPath, nil
 }
 
+// List appimages to select from
 func PromptBinarySelection(downloadLinks []BinaryUrl) (result *BinaryUrl, err error) {
 	if len(downloadLinks) == 1 {
 		return &downloadLinks[0], nil
@@ -171,6 +179,7 @@ func PromptBinarySelection(downloadLinks []BinaryUrl) (result *BinaryUrl, err er
 	return &downloadLinks[i], nil
 }
 
+// read the update info embeded into the appimage file
 func ReadUpdateInfo(appImagePath string) (string, error) {
 	elfFile, err := elf.Open(appImagePath)
 	if err != nil {
@@ -196,6 +205,7 @@ func ReadUpdateInfo(appImagePath string) (string, error) {
 	return update_info, nil
 }
 
+// Get SHA1 Hash of a file
 func GetFileSHA1(filePath string) (string, error) {
 	file, err := os.Open(filePath)
 	if err != nil {
@@ -210,27 +220,32 @@ func GetFileSHA1(filePath string) (string, error) {
 	return hex.EncodeToString(sha1Checksum.Sum(nil)), nil
 }
 
+// check if a file is appimage
 func IsAppImageFile(filePath string) bool {
 	file, err := os.Open(filePath)
 	if err != nil {
 		return false
 	}
 
-	return isAppImage1File(file) || isAppImage2File(file)
+	return isAppImageType1File(file) || isAppImageType2File(file)
 }
 
-func isAppImage2File(file *os.File) bool {
+// Check if appimage is type 2
+func isAppImageType2File(file *os.File) bool {
 	return isElfFile(file) && fileHasBytesAt(file, []byte{0x41, 0x49, 0x02}, 8)
 }
 
-func isAppImage1File(file *os.File) bool {
+// Check if appimage is type 1
+func isAppImageType1File(file *os.File) bool {
 	return isISO9660(file) || fileHasBytesAt(file, []byte{0x41, 0x49, 0x01}, 8)
 }
 
+// Check if a file is Elf file
 func isElfFile(file *os.File) bool {
 	return fileHasBytesAt(file, []byte{0x7f, 0x45, 0x4c, 0x46}, 0)
 }
 
+// Check if the file is a ISO 9660 Standard File
 func isISO9660(file *os.File) bool {
 	for _, offset := range []int64{32769, 34817, 36865} {
 		if fileHasBytesAt(file, []byte{'C', 'D', '0', '0', '1'}, offset) {
@@ -241,6 +256,7 @@ func isISO9660(file *os.File) bool {
 	return false
 }
 
+// check if a file has bytes at particular position
 func fileHasBytesAt(file *os.File, expectedBytes []byte, offset int64) bool {
 	readBytes := make([]byte, len(expectedBytes))
 	_, _ = file.Seek(offset, 0)

@@ -8,26 +8,30 @@ import (
 	"github.com/google/go-github/v31/github"
 )
 
+// Struct containing GitHub Repo Details
 type GitHubRepo struct {
-	User    string
-	Project string
-	Release string
-	File    string
-	TagName string
+	User     string
+	Project  string
+	Release  string
+	File     string
+	TagName  string
+	UserRepo string
 }
 
-// Function which parses string to a github repo information, adn returns a object and error (if any)
+// Parses string to a github repo information, and returns a object and error (if any)
 func NewGitHubRepo(target string, tagName string) (appInfo Application, err error) {
 	appInfo = &GitHubRepo{}
 	ghSource := GitHubRepo{}
 
+	// parse the target as a github url and get the user/repo from it
 	userRepo, err := utils.GetUserRepoFromUrl(target)
-	if err == nil {
+	if err == nil { // If successfull return the information
 		userRepoSplitted := strings.Split(userRepo, "/")
 		ghSource = GitHubRepo{
 			User:    userRepoSplitted[0],
 			Project: userRepoSplitted[1],
 			TagName: tagName,
+			UserRepo: userRepoSplitted[0] + "/" + userRepoSplitted[1],
 		}
 		return &ghSource, nil
 	} else {
@@ -40,12 +44,14 @@ func NewGitHubRepo(target string, tagName string) (appInfo Application, err erro
 				User:    targetParts[0],
 				Project: targetParts[0],
 				TagName: tagName,
+				UserRepo: targetParts[0] + "/" + targetParts[0],
 			}
 		} else {
 			ghSource = GitHubRepo{
 				User:    targetParts[0],
 				Project: targetParts[1],
 				TagName: tagName,
+				UserRepo: targetParts[0] + "/" + targetParts[1],
 			}
 		}
 
@@ -53,12 +59,12 @@ func NewGitHubRepo(target string, tagName string) (appInfo Application, err erro
 	}
 }
 
-// Function to get the github repo id from the repo information
+// Get the github user/repo from the repo information
 func (g GitHubRepo) Id() string {
-	return g.User + "/" + g.Project
+	return g.UserRepo
 }
 
-// Function which gets the latest appimage from github release
+// Gets the latest/specified tagged release from github
 func (g GitHubRepo) GetLatestRelease() (*Release, error) {
 	client := github.NewClient(nil) // Client For Interacting with github api
 	// Get all the releases from the target
@@ -100,13 +106,13 @@ func (g GitHubRepo) GetLatestRelease() (*Release, error) {
 	return nil, NoAppImageBinariesFound
 }
 
-// Function which downloads appimage from remote
+// Download appimage from remote
 func (g GitHubRepo) Download(binaryUrl *utils.BinaryUrl, targetPath string) (err error) {
 	err = utils.DownloadAppImage(binaryUrl.Url, targetPath)
 	return
 }
 
-// Function which generates a fallback update information for a appimage
+// Generate a fallback update information for a appimage
 func (g GitHubRepo) FallBackUpdateInfo() string {
 	updateInfo := "gh-releases-direct|" + g.User + "|" + g.Project
 	if g.Release == "" {
@@ -124,6 +130,7 @@ func (g GitHubRepo) FallBackUpdateInfo() string {
 	return updateInfo
 }
 
+// Gets All The AppImage Files from a github release
 func getAppImageFilesFromRelease(release *github.RepositoryRelease) ([]utils.BinaryUrl) {
 	var downloadLinks []utils.BinaryUrl // Contains Download Links
 
@@ -139,6 +146,7 @@ func getAppImageFilesFromRelease(release *github.RepositoryRelease) ([]utils.Bin
 	return downloadLinks
 }
 
+// Gets Release From A Particular Tag Name
 func getReleaseFromTagName(releases []*github.RepositoryRelease, tagName string) (*github.RepositoryRelease) {
 	for _, release := range releases {
 		if *release.Draft { continue }

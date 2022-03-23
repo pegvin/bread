@@ -28,17 +28,17 @@ type Registry struct {
 
 // Function to open a registry entry
 func OpenRegistry() (registry *Registry, err error) {
-	path, err := makeRegistryFilePath()
+	path, err := makeRegistryFilePath() // Get the full path to .registry.json
 	if err != nil {
 		return
 	}
 
-	data, err := ioutil.ReadFile(path)
+	data, err := ioutil.ReadFile(path) // Read file
 	if err != nil {
-		return &Registry{Entries: map[string]RegistryEntry{}}, nil
+		return &Registry{Entries: map[string]RegistryEntry{}}, nil // If some error occured return a new empty registry
 	}
 
-	err = json.Unmarshal(data, &registry)
+	err = json.Unmarshal(data, &registry) // Parse JSON data into the struct
 	if err != nil {
 		return
 	}
@@ -48,17 +48,17 @@ func OpenRegistry() (registry *Registry, err error) {
 
 // Function to close a registry entry
 func (registry *Registry) Close() error {
-	path, err := makeRegistryFilePath()
+	path, err := makeRegistryFilePath() // Get full path to .registry.json
 	if err != nil {
 		return err
 	}
 
-	blob, err := json.Marshal(registry)
+	blob, err := json.Marshal(registry) // Convert registry struct into a blob
 	if err != nil {
 		return err
 	}
 
-	err = ioutil.WriteFile(path, blob, 0666)
+	err = ioutil.WriteFile(path, blob, 0666) // write the blob file with 666 permissions
 	if err != nil {
 		return err
 	}
@@ -66,31 +66,32 @@ func (registry *Registry) Close() error {
 	return nil
 }
 
-// Function to add a registry entry
+// Add a entry to registry
 func (registry *Registry) Add(entry RegistryEntry) error {
 	registry.Entries[entry.FilePath] = entry
 	return nil
 }
 
-// Function to remove a registry entry
+// Remove a entry from registry
 func (registry *Registry) Remove(filePath string) {
 	delete(registry.Entries, filePath)
 }
 
-// Function to update a registry entry
+// Update registry entry
 func (registry *Registry) Update() {
-	applicationsDir, err := MakeApplicationsDirPath()
+	applicationsDir, err := MakeApplicationsDirPath() // Applications folder full path
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	files, err := ioutil.ReadDir(applicationsDir)
+	files, err := ioutil.ReadDir(applicationsDir) // Read all the files in the folder
 	if err != nil {
 		log.Fatal(err)
 	}
 
+	// Filter out all the appimage files and put them into registry
 	for _, f := range files {
-		if strings.HasSuffix(f.Name(), ".AppImage") {
+		if strings.HasSuffix(strings.ToLower(f.Name()), ".appimage") {
 			filePath := filepath.Join(applicationsDir, f.Name())
 			_, ok := registry.Entries[filePath]
 			if !ok {
@@ -100,7 +101,7 @@ func (registry *Registry) Update() {
 		}
 	}
 
-	// for filePath, _ := range registry.Entries {
+	// Remove deleted/non-existent files from registry
 	for filePath := range registry.Entries {
 			if _, err := os.Stat(filePath); os.IsNotExist(err) {
 			registry.Remove(filePath)
@@ -108,7 +109,7 @@ func (registry *Registry) Update() {
 	}
 }
 
-// Function which creates a new entry in the registry from a file
+// Create a new entry in the registry from a appimage file
 func (registry *Registry) createEntryFromFile(filePath string) RegistryEntry {
 	fileSha1, _ := GetFileSHA1(filePath)
 	updateInfo, _ := updateUtils.ReadUpdateInfo(filePath)
@@ -123,7 +124,7 @@ func (registry *Registry) createEntryFromFile(filePath string) RegistryEntry {
 	return entry
 }
 
-// Function to lookup a entry in the registry
+// Lookup a entry in the registry
 func (registry *Registry) Lookup(target string) (RegistryEntry, bool) {
 	applicationsDir, _ := MakeApplicationsDirPath()
 	possibleFullPath := filepath.Join(applicationsDir, target)
@@ -152,7 +153,7 @@ func (registry *Registry) Lookup(target string) (RegistryEntry, bool) {
 	return RegistryEntry{}, false
 }
 
-// Function which makes the registry file path
+// makes the registry file path
 func makeRegistryFilePath() (string, error) {
 	applicationsPath, err := MakeApplicationsDirPath()
 	if err != nil {

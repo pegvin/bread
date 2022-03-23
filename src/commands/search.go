@@ -23,7 +23,7 @@ func (cmd *SearchCmd) Run(debug bool) (error) {
 		return err
 	}
 
-	var foundItems []utils.AppImageFeedItems
+	var foundItems []utils.AppImageFeedItem
 	bar := progressbar.Default(
 		int64(len(jsonData.Items)),
 		"Searching List...",

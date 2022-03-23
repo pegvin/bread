@@ -12,7 +12,8 @@ import (
 	"path/filepath"
 )
 
-type AppImageFeedItems struct {
+// Struct Contains AppImage Item Info
+type AppImageFeedItem struct {
 	Name string
 	Description string
 	Categories []string
@@ -29,6 +30,7 @@ type AppImageFeedItems struct {
 	Screenshots []string
 }
 
+// Struct Contains Catalog From https://appimage.github.io/feed.jsonhttps://appimage.github.io/feed.json
 type AppImageFeed struct {
 	Version int
 	Home_page_url string
@@ -37,9 +39,10 @@ type AppImageFeed struct {
 	Icon string
 	Favicon string
 	Expired bool
-	Items []AppImageFeedItems
+	Items []AppImageFeedItem
 }
 
+// Get Full Path to `.AppImageFeed.json` in Applications Dir
 func makeAppImageFeedPath() (filePath string, err error) {
 	usr, err := user.Current()
 	if err != nil {
@@ -49,6 +52,7 @@ func makeAppImageFeedPath() (filePath string, err error) {
 	return filepath.Join(usr.HomeDir, "Applications", ".AppImageFeed.json"), nil
 }
 
+// Read `.AppImageFeed.json` file into a struct
 func ReadAppImageListJson() (aifeedJson *AppImageFeed, err error) {
 	filePath, err := makeAppImageFeedPath()
 
@@ -68,6 +72,7 @@ func ReadAppImageListJson() (aifeedJson *AppImageFeed, err error) {
 	return myAppImageJson, nil
 }
 
+// Get the latest information from API
 func FetchAppImageListJson() (err error) {
 	filePath, err := makeAppImageFeedPath()
 

@@ -52,7 +52,7 @@ func (cmd *RemoveCmd) Run(debug bool) (err error) {
 	return err
 }
 
-// Function which will remove the application desktop integration
+// Remove the application desktop integration
 func removeDesktopIntegration(filePath string, debug bool) error {
 	libAppImage, err := libappimagego.NewLibAppImageBindings()
 	if err != nil {

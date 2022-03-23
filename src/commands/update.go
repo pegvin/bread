@@ -45,7 +45,7 @@ func (cmd *UpdateCmd) Run(debug bool) (err error) {
 			continue
 		}
 
-		fmt.Println("Looking for updates of: ", entry.FilePath)
+		if debug == true { fmt.Println("Looking for updates of: ", entry.FilePath) }
 		updateAvailable, err := updateMethod.Lookup()
 		if err != nil {
 			println(err.Error())
@@ -75,6 +75,7 @@ func (cmd *UpdateCmd) Run(debug bool) (err error) {
 	return nil
 }
 
+// Get a application from registry
 func (cmd *UpdateCmd) getRegistryEntry(target string) (utils.RegistryEntry, error) {
 	registry, err := utils.OpenRegistry()
 	if err != nil {
@@ -96,6 +97,7 @@ func (cmd *UpdateCmd) getRegistryEntry(target string) (utils.RegistryEntry, erro
 	}
 }
 
+// Get all the applications from the registry
 func getAllTargets() ([]string, error) {
 	registry, err := utils.OpenRegistry()
 	if err != nil {

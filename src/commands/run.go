@@ -14,6 +14,7 @@ type RunCmd struct {
 	Arguments []string `arg:"" passthrough:"" optional:"" name:"arguments" help:"Argument to pass to the program" type:"string"`
 }
 
+// Execute A Command With STDOUT & STDERR, & arguments
 func executeCmd(target string, arguments []string) {
 	options := goCmd.Options{
 		Buffered: false,
@@ -75,7 +76,7 @@ func (cmd *RunCmd) Run(debug bool) (err error) {
 		return err
 	}
 
-	// Check if the FilePath Exist, Show error
+	// Check if the FilePath Exist (cached file), Show error
 	if _, err = os.Stat(targetFilePath); err == nil {
 		executeCmd(targetFilePath, cmd.Arguments)
 		return nil

@@ -103,6 +103,7 @@ func (cmd *InstallCmd) addToRegistry(targetFilePath string, repo repos.Applicati
 	return nil
 }
 
+// Get AppImage information: isTerminalApp, AppImageType
 func getAppImageInfo(targetFilePath string, debug bool) (*utils.AppImageInfo, error) {
 	libAppImage, err := libappimagego.NewLibAppImageBindings() // Load the `libappimage` Library For Integration
 	if err != nil {
@@ -115,7 +116,7 @@ func getAppImageInfo(targetFilePath string, debug bool) (*utils.AppImageInfo, er
 	}, nil
 }
 
-// Function To Integrate The AppImage To Desktop. (Can Only Be Called From InstallCmd Struct)
+// Integrate The AppImage To Desktop.
 func (cmd *InstallCmd) createDesktopIntegration(targetFilePath string, debug bool) {
 	libAppImage, err := libappimagego.NewLibAppImageBindings() // Load the `libappimage` Library For Integration
 	if err != nil {

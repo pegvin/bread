@@ -17,7 +17,7 @@ type Application interface {
 	FallBackUpdateInfo() string
 }
 
-// Function Which Parses String And Returns A Repo Object And Error (nil if not any)
+// Parse String And Returns A Repo Object And Error (nil if not any)
 func ParseTarget(target string, tagName string) (Application, error) {
 	target = strings.ToLower(target)
 	// Parse The Repo As A GitHub Repo, And if there is no error return repo
