@@ -12,14 +12,14 @@ Install, update, remove & run AppImage from GitHub using your CLI. (Fork of [App
 If you already have installed or installing [LibAppImage](https://repology.org/project/libappimage/versions) you can just install bread binary with Curl:
 
 ```bash
-sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.4.3/bread-0.4.3-x86_64 -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread
+sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.4.4/bread-0.4.4-x86_64 -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread
 ```
 
 <br>
 
 If LibAppImage is not available for your distribution or you don't want to install it specially for this software, you can get the bread's AppImage which contains LibAppImage v1.0.2, using Curl:
 ```bash
-sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.4.3/bread-0.4.3-x86_64.AppImage -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread
+sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.4.4/bread-0.4.4-x86_64.AppImage -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread
 ```
 
 ***It is recommended to install the Binary instead of AppImage, if your distribution provides LibAppImage Version 1.0.2 Or Higher.***
@@ -50,6 +50,8 @@ rm -v /usr/local/bin/bread
   <br>
   <p>To install an Application from GitHub you can use the install command where user is the github repo owner and repo is the repository name</p>
   <pre><code>bread install user/repo</code></pre>
+  <p>To install an application from a different Tag name you can specify the tag name too</p>
+  <pre><code>bread install user/repo tagname</code></pre>
 </details>
 
 <details>
