@@ -14,12 +14,13 @@ var ApplicationInstalled = errors.New("the application is installed already")
 
 type InstallCmd struct {
 	Target string `arg:"" name:"target" help:"Installation target." type:"string"`
+	TagName string `arg:"" optional:"" name:"tagname" help:"GitHub Release TagName To Download From." type:"string"`
 }
 
 // Function Which Will Be Called When `install` is the Command.
 func (cmd *InstallCmd) Run(debug bool) (err error) {
 	// Parse The user input
-	repo, err := repos.ParseTarget(cmd.Target)
+	repo, err := repos.ParseTarget(cmd.Target, cmd.TagName)
 	if err != nil {
 		return err
 	}
@@ -28,6 +29,10 @@ func (cmd *InstallCmd) Run(debug bool) (err error) {
 	release, err := repo.GetLatestRelease()
 	if err != nil {
 		return err
+	}
+
+	if cmd.TagName != "" && release.Tag != cmd.TagName {
+		fmt.Println("Tag '" + cmd.TagName + "' not found, using latest available '" + release.Tag + "' instead")
 	}
 
 	// Show A Prompt To Select A AppImage File.
