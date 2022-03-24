@@ -38,7 +38,7 @@ type AppImageFeed struct {
 }
 
 // Get Full Path to `.AppImageFeed.json` in Applications Dir
-func makeAppImageFeedPath() (filePath string, err error) {
+func makeAppImageCatalogPath() (filePath string, err error) {
 	usr, err := user.Current()
 	if err != nil {
 		return "", err
@@ -48,8 +48,8 @@ func makeAppImageFeedPath() (filePath string, err error) {
 }
 
 // Read `.AppImageFeed.json` file into a struct
-func ReadAppImageListJson() (aifeedJson *AppImageFeed, err error) {
-	filePath, err := makeAppImageFeedPath()
+func ReadAppImageCatalog() (aifeedJson *AppImageFeed, err error) {
+	filePath, err := makeAppImageCatalogPath()
 
 	if err != nil {
 		return nil, err
@@ -68,8 +68,8 @@ func ReadAppImageListJson() (aifeedJson *AppImageFeed, err error) {
 }
 
 // Get the latest information from API
-func FetchAppImageListJson() (err error) {
-	filePath, err := makeAppImageFeedPath()
+func FetchAppImageCatalog() (err error) {
+	filePath, err := makeAppImageCatalogPath()
 
 	if err != nil {
 		return err
