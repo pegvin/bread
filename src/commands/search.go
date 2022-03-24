@@ -14,11 +14,11 @@ type SearchCmd struct {
 
 func (cmd *SearchCmd) Run(debug bool) (error) {
 	var err error
-	fmt.Println("Getting Latest List...")
-	err = utils.FetchAppImageListJson()
+	fmt.Println("Updating Catalog Data...")
+	err = utils.FetchAppImageCatalog()
 	cmd.Name = strings.ToLower(cmd.Name)
 
-	jsonData, err := utils.ReadAppImageListJson()
+	jsonData, err := utils.ReadAppImageCatalog()
 	if err != nil {
 		return err
 	}
@@ -26,7 +26,7 @@ func (cmd *SearchCmd) Run(debug bool) (error) {
 	var foundItems []utils.AppImageFeedItem
 	bar := progressbar.Default(
 		int64(len(jsonData.Items)),
-		"Searching List...",
+		"Searching List",
 	)
 
 	// This Loop Will Check if the name of description has our search target
@@ -63,12 +63,18 @@ func (cmd *SearchCmd) Run(debug bool) (error) {
 		bar.Add(1)
 	}
 
-	for foundIndex := range foundItems {
-		fmt.Println("\n" + foundItems[foundIndex].Name + " - " + foundItems[foundIndex].Links[0].Url)
-		if foundItems[foundIndex].Description != "" {
-			fmt.Println("  " + foundItems[foundIndex].Description)
-		} else {
-			fmt.Println("  No Description provided from Author!")
+	bar.Finish()
+
+	if len(foundItems) == 0 {
+		fmt.Println("Nothing Found in the catalog!")
+	} else {
+		for foundIndex := range foundItems {
+			fmt.Println("\n" + foundItems[foundIndex].Name + " - " + foundItems[foundIndex].Links[0].Url)
+			if foundItems[foundIndex].Description != "" {
+				fmt.Println("  " + foundItems[foundIndex].Description)
+			} else {
+				fmt.Println("  No Description provided from Author!")
+			}
 		}
 	}
 	return nil
