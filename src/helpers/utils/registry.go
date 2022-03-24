@@ -1,13 +1,12 @@
 package utils
 
 import (
-	"encoding/json"
-	"io/ioutil"
-	"log"
 	"os"
-	"path/filepath"
+	"log"
 	"strings"
-
+	"io/ioutil"
+	"encoding/json"
+	"path/filepath"
 	updateUtils "github.com/DEVLOPRR/appimage-update/util"
 )
 

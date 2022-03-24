@@ -108,8 +108,8 @@ func (g GitHubRepo) GetLatestRelease() (*Release, error) {
 
 // Download appimage from remote
 func (g GitHubRepo) Download(binaryUrl *utils.BinaryUrl, targetPath string) (err error) {
-	err = utils.DownloadAppImage(binaryUrl.Url, targetPath)
-	return
+	err = utils.DownloadFile(binaryUrl.Url, targetPath, 0755, "Downloading")
+	return err
 }
 
 // Generate a fallback update information for a appimage

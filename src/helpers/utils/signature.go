@@ -1,15 +1,16 @@
 package utils
 
 import (
-	"bytes"
-	"crypto/sha256"
-	"debug/elf"
-	"encoding/hex"
-	"fmt"
-	"golang.org/x/crypto/openpgp"
 	"io"
 	"os"
+	"fmt"
+	"bytes"
 	"strings"
+	"debug/elf"
+	"crypto/sha1"
+	"encoding/hex"
+	"crypto/sha256"
+	"golang.org/x/crypto/openpgp"
 )
 
 // Function to verify signature
@@ -167,4 +168,34 @@ func (reader *appImagePreSignatureReader) Read(p []byte) (n int, err error) {
 	}
 
 	return n, err
+}
+
+// Show signature of a given file
+func ShowSignature(filePath string) (error) {
+	signingEntity, err := VerifySignature(filePath)
+	if err != nil {
+		return err
+	}
+	if signingEntity != nil {
+		fmt.Println("AppImage signed by:")
+		for _, v := range signingEntity.Identities {
+			fmt.Println("\t", v.Name)
+		}
+	}
+	return nil
+}
+
+// Get SHA1 Hash of a file
+func GetFileSHA1(filePath string) (string, error) {
+	file, err := os.Open(filePath)
+	if err != nil {
+		return "", err
+	}
+
+	sha1Checksum := sha1.New()
+	_, err = io.Copy(sha1Checksum, file)
+	if err != nil {
+		return "", err
+	}
+	return hex.EncodeToString(sha1Checksum.Sum(nil)), nil
 }

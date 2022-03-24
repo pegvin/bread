@@ -3,11 +3,6 @@ package utils
 import (
 	"io/ioutil"
 	"encoding/json"
-	"github.com/schollz/progressbar/v3"
-	"io"
-	"net/http"
-	"os"
-	"os/signal"
 	"os/user"
 	"path/filepath"
 )
@@ -80,35 +75,6 @@ func FetchAppImageListJson() (err error) {
 		return err
 	}
 
-	output, err := os.OpenFile(filePath, os.O_RDWR|os.O_CREATE, 0666)
-	if err != nil {
-		return err
-	}
-	defer output.Close()
-
-	resp, err := http.Get("https://appimage.github.io/feed.json")
-	if err != nil {
-		return err
-	}
-	defer resp.Body.Close()
-
-	bar := progressbar.DefaultBytes(
-		resp.ContentLength,
-		"Fetching Json",
-	)
-
-	go func() {
-		sigchan := make(chan os.Signal, 1)
-		signal.Notify(sigchan, os.Interrupt)
-		<-sigchan
-
-		_ = resp.Body.Close()
-		_ = output.Close()
-		_ = os.Remove(filePath)
-
-		os.Exit(0)
-	}()
-
-	_, err = io.Copy(io.MultiWriter(output, bar), resp.Body)
+	err = DownloadFile("https://appimage.github.io/feed.json", filePath, 0666, "Fetching Json")
 	return err
 }

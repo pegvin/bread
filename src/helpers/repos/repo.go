@@ -1,8 +1,8 @@
 package repos
 
 import (
-	"bread/src/helpers/utils"
 	"strings"
+	"bread/src/helpers/utils"
 )
 
 type Release struct {
