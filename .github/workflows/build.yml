@@ -3,8 +3,8 @@ name: Build Action
 on: 
   push:
     branches: [ master ]
-    paths:
-    - './src/**/**/**'
+    # paths:
+    # - './src/**/**/**'
 
 jobs:
   test-build:
