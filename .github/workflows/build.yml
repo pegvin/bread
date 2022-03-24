@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
     paths:
-    - './src/**/*.go'
+    - './src/**'
 
 jobs:
   test-build:
