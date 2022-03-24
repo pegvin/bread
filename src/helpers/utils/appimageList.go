@@ -25,7 +25,7 @@ type AppImageFeedItem struct {
 	Screenshots []string
 }
 
-// Struct Contains Catalog From https://appimage.github.io/feed.jsonhttps://appimage.github.io/feed.json
+// Struct Contains Catalog From https://appimage.github.io/feed.json
 type AppImageFeed struct {
 	Version int
 	Home_page_url string
