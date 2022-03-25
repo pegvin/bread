@@ -17,7 +17,7 @@ var cli struct {
 	Search     commands.SearchCmd     `cmd:"" help:"Search for appliation from appimage list."`
 	Clean      commands.CleanCmd      `cmd:"" help:"Clean all the cache."`
 	Version    VersionFlag            `name:"version" help:"Print version information and quit"`
-	Debug      bool                   `help:"Show extra information for debugging."`
+	Debug      bool                   `help:"Show extra information for debugging." default:"false"`
 }
 
 func (v VersionFlag) BeforeApply(app *kong.Kong, vars kong.Vars) error {
@@ -36,7 +36,7 @@ func main() {
 			Compact: true,
 		}),
 		kong.Vars{
-			"VERSION": "0.4.4",
+			"VERSION": "0.5.0",
 		})
 	// Call the Run() method of the selected parsed command.
 	err := ctx.Run(cli.Debug)
