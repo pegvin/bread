@@ -30,7 +30,7 @@ func main() {
 	ctx := kong.Parse(
 		&cli,
 		kong.Name("bread"),
-		kong.Description("Install, update and remove AppImage from GitHub using your CLI."),
+		kong.Description("Install, update, remove & run AppImage from GitHub using your CLI."),
 		kong.UsageOnError(),
 		kong.ConfigureHelp(kong.HelpOptions{
 			Compact: true,
