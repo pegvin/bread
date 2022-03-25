@@ -1,13 +1,11 @@
 package commands
 
 import (
+	"os"
+	"fmt"
+	"errors"
 	"bread/src/helpers/repos"
 	"bread/src/helpers/utils"
-	"github.com/DEVLOPRR/libappimage-go"
-
-	"errors"
-	"fmt"
-	"os"
 )
 
 var ApplicationInstalled = errors.New("the application is installed already")
@@ -59,26 +57,32 @@ func (cmd *InstallCmd) Run(debug bool) (err error) {
 	}
 
 	// Add The Current Application To The Registry `.registry.json`
-	cmd.addToRegistry(targetFilePath, repo, debug)
+	cmd.addToRegistry(targetFilePath, repo, release.Tag, debug)
 
 	// Integrated The AppImage To Desktop
-	cmd.createDesktopIntegration(targetFilePath, debug)
+	err = utils.CreateDesktopIntegration(targetFilePath, debug)
+	if err != nil {
+		fmt.Println("Integration Failed: " + err.Error())
+	} else {
+		fmt.Println("Integration Complete!")
+	}
 
 	// Print Signature Info If Exist.
 	utils.ShowSignature(targetFilePath)
 
+	fmt.Println("Installed '" + repo.Id() + "'!")
 	return nil
 }
 
 // Function To Add Installed Program To Registry (Installed App information is stored in here).
-func (cmd *InstallCmd) addToRegistry(targetFilePath string, repo repos.Application, debug bool) (error) {
+func (cmd *InstallCmd) addToRegistry(targetFilePath string, repo repos.Application, TagName string, debug bool) (error) {
 	sha1, _ := utils.GetFileSHA1(targetFilePath) // Get The Sha1 Hash
 	updateInfo, _ := utils.ReadUpdateInfo(targetFilePath) // Get The UpdateInfo
 	if updateInfo == "" {
 		updateInfo = repo.FallBackUpdateInfo()
 	}
 
-	appimageInfo, err := getAppImageInfo(targetFilePath, debug)
+	appimageInfo, err := utils.GetAppImageInfo(targetFilePath, debug)
 	if err != nil {
 		return err
 	}
@@ -86,9 +90,10 @@ func (cmd *InstallCmd) addToRegistry(targetFilePath string, repo repos.Applicati
 	// Make a new entry struct
 	entry := utils.RegistryEntry{
 		Repo:       repo.Id(),
+		TagName:    TagName,
 		FileSha1:   sha1,
-		AppName:    "",
-		AppVersion: "",
+		// AppName:    "",
+		// AppVersion: "",
 		FilePath:   targetFilePath,
 		UpdateInfo: updateInfo,
 		IsTerminalApp: appimageInfo.IsTerminalApp,
@@ -101,33 +106,4 @@ func (cmd *InstallCmd) addToRegistry(targetFilePath string, repo repos.Applicati
 		_ = registry.Close() // Close the registry
 	}
 	return nil
-}
-
-// Get AppImage information: isTerminalApp, AppImageType
-func getAppImageInfo(targetFilePath string, debug bool) (*utils.AppImageInfo, error) {
-	libAppImage, err := libappimagego.NewLibAppImageBindings() // Load the `libappimage` Library For Integration
-	if err != nil {
-		return nil, err
-	}
-
-	return &utils.AppImageInfo{
-		IsTerminalApp: libAppImage.IsTerminalApp(targetFilePath),
-		AppImageType: libAppImage.GetType(targetFilePath, debug),
-	}, nil
-}
-
-// Integrate The AppImage To Desktop.
-func (cmd *InstallCmd) createDesktopIntegration(targetFilePath string, debug bool) {
-	libAppImage, err := libappimagego.NewLibAppImageBindings() // Load the `libappimage` Library For Integration
-	if err != nil {
-		fmt.Println("Integration failed:", err.Error())
-		return
-	}
-
-	err = libAppImage.Register(targetFilePath, debug) // Register The File
-	if err != nil {
-		fmt.Println("Integration failed: " + err.Error())
-	} else {
-		fmt.Println("Integration completed")
-	}
 }
