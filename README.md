@@ -30,7 +30,7 @@ Install, update, remove & run AppImage from GitHub using your CLI. (Fork of [App
   <pre><code>sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.4.4/bread-0.4.4-x86_64.AppImage -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread</code></pre>
 </details>
 
-***Any version of libappimage will work with bread but it is recommended to use v1.0.0 or greater.***
+***Any version of libappimage will work with bread but it is recommended to use v1.0.0 or greater, You can also Refer to this [list](https://repology.org/project/libappimage/versions) to check what version of libappimage your Distribution provides.***
 
 ---
 
