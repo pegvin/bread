@@ -1,3 +1,4 @@
+
 # Bread ![:bread:](./.github/bread.svg)
 
 Install, update, remove & run AppImage from GitHub using your CLI. (Fork of [AppImage ClI Tool](https://github.com/AppImageCrafters/appimage-cli-tool))
@@ -7,30 +8,35 @@ Install, update, remove & run AppImage from GitHub using your CLI. (Fork of [App
 - Run Applications From Remote Without Installing Them
 - Update with ease
 
-## Installation
+## Getting Started
 
-If you already have installed or installing [LibAppImage](https://repology.org/project/libappimage/versions) you can just install bread binary with Curl:
+### Installation
 
-```bash
-sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.4.4/bread-0.4.4-x86_64 -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread
-```
+<details>
+  <summary>Arch Linux & it's Derivatives</summary>
+  <br>
+  <p>you can use this step if your distribution does provide <code>libappimage</code> v1.0.0 or greater, which is the case on Arch Linux & it's Derivatives, kaOS, KDE Neon, Parabola Linux</p>
+  <p>install <code>libappimage</code> dependency</p>
+  <pre><code>pacman -S libappimage</code></pre>
+  <p>then install bread</p>
+  <pre><code>sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.4.4/bread-0.4.4-x86_64 -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread</code></pre>
+</details>
 
-<br>
+<details>
+  <summary>Debian & it's Derivatives</summary>
+  <br>
+  <p>you can use this step if your distribution doesn't provide <code>libappimage</code> v1.0.0 or greater, which is the case on Debian & it's derivatives</p>
+  <p>get the appimage containing <code>libappimage</code> v1.0.3</p>
+  <pre><code>sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.4.4/bread-0.4.4-x86_64.AppImage -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread</code></pre>
+</details>
 
-If LibAppImage is not available for your distribution or you don't want to install it specially for this software, you can get the bread's AppImage which contains LibAppImage v1.0.2, using Curl:
-```bash
-sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.4.4/bread-0.4.4-x86_64.AppImage -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread
-```
+***Any version of libappimage will work with bread but it is recommended to use v1.0.0 or greater.***
 
-***It is recommended to install the Binary instead of AppImage, if your distribution provides LibAppImage Version 1.0.2 Or Higher.***
-
----
-
-## Uninstallation
+### Uninstallation
 
 Just Remove the binary
 ```bash
-rm -v /usr/local/bin/bread
+sudo rm -v /usr/local/bin/bread
 ```
 
 **NOTE** this won't delete the app you've installed.
@@ -105,6 +111,7 @@ rm -v /usr/local/bin/bread
 
 ## Tested On:
 - Ubuntu 20.04 - by me
+- Manjaro Linux - by me
 - Arch Linux - by [my brother](https://github.com/idno34)
 
 ---
