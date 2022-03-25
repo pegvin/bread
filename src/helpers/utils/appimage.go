@@ -3,7 +3,51 @@ package utils
 import (
 	"os"
 	"bytes"
+	"github.com/DEVLOPRR/libappimage-go"
 )
+
+// Get AppImage information: isTerminalApp, AppImageType
+func GetAppImageInfo(targetFilePath string, debug bool) (*AppImageInfo, error) {
+	libAppImage, err := libappimagego.NewLibAppImageBindings() // Load the `libappimage` Library For Integration
+	if err != nil {
+		return nil, err
+	}
+
+	return &AppImageInfo{
+		IsTerminalApp: libAppImage.IsTerminalApp(targetFilePath),
+		AppImageType: libAppImage.GetType(targetFilePath, debug),
+	}, nil
+}
+
+// Remove the application desktop integration
+func RemoveDesktopIntegration(filePath string, debug bool) (error) {
+	libAppImage, err := libappimagego.NewLibAppImageBindings()
+	if err != nil {
+		return err
+	}
+
+	if libAppImage.ShallNotBeIntegrated(filePath) {
+		return nil
+	}
+
+	err = libAppImage.Unregister(filePath, debug)
+	return err
+}
+
+// Integrate The AppImage To Desktop.
+func CreateDesktopIntegration(targetFilePath string, debug bool) (error) {
+	libAppImage, err := libappimagego.NewLibAppImageBindings() // Load the `libappimage` Library For Integration
+	if err != nil {
+		return err
+	}
+
+	err = libAppImage.Register(targetFilePath, debug) // Register The File
+	if err != nil {
+		return err
+	} else {
+		return nil
+	}
+}
 
 // check if a file is appimage
 func IsAppImageFile(filePath string) bool {
