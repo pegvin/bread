@@ -32,7 +32,9 @@ Install, update, remove & run AppImage from GitHub using your CLI. (Fork of [App
 
 ***Any version of libappimage will work with bread but it is recommended to use v1.0.0 or greater.***
 
-### Uninstallation
+---
+
+### Removal
 
 Just Remove the binary
 ```bash
@@ -120,6 +122,7 @@ sudo rm -v /usr/local/bin/bread
 Bread installs all the applications inside the `Applications` directory in your Linux Home Directory `~`, inside this directory there can be also a directory named `run-cache` which contains all the appimages you've run from the remote via the `bread run` command.
 
 In the `Applications` there is also a file named `.registry.json` which contains information related to the installed applications!
+In the `Applications` directory there is also a file named `.AppImageFeed.json` which is AppImage Catalog From [AppImage API](https://appimage.github.io/feed.json)
 
 ---
 
