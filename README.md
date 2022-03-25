@@ -147,7 +147,7 @@ Make The Build Script Executable And Run It
 
 ```bash
 chmod +x ./make
-./make
+./make --prod
 ```
 
 And To Build The AppImage Run
