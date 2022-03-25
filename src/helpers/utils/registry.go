@@ -13,10 +13,11 @@ import (
 type RegistryEntry struct {
 	Repo          string
 	FileSha1      string
-	AppName       string
-	AppVersion    string
+	// AppName       string
+	// AppVersion    string
 	FilePath      string
 	UpdateInfo    string
+	TagName       string
 	IsTerminalApp bool
 	AppImageType  int
 }
@@ -114,9 +115,10 @@ func (registry *Registry) createEntryFromFile(filePath string) RegistryEntry {
 	updateInfo, _ := updateUtils.ReadUpdateInfo(filePath)
 	entry := RegistryEntry{
 		Repo:       "",
+		TagName:    "",
 		FileSha1:   fileSha1,
-		AppName:    "",
-		AppVersion: "",
+		// AppName:    "",
+		// AppVersion: "",
 		FilePath:   filePath,
 		UpdateInfo: updateInfo,
 	}
