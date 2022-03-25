@@ -5,6 +5,8 @@ on:
     branches: [ main ]
     paths:
     - 'src/**'
+    - 'go.mod'
+    - 'go.sum'
 
 jobs:
   test-build:
