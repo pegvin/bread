@@ -30,11 +30,13 @@ elif [[ $1 = 'get-deps' ]]; then
 	echo "Getting Depedencies"
 	${COMPILER} mod tidy
 	go get -t -u ./...
+	echo 'Done!'
 elif [[ $1 = 'clean' ]]; then
 	rm -rfv $DIST
 	rm -rfv appimage-builder-cache
 	rm -rfv AppDir
 	rm -rfv bread-*.AppImage*
+	echo 'Done!'
 else
 	echo "Build Script '$1' Not Found!"
 fi
