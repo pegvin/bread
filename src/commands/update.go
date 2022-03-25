@@ -1,13 +1,12 @@
 package commands
 
 import (
-	"errors"
+	"os"
 	"fmt"
+	"errors"
 	"strings"
-
 	"bread/src/helpers/utils"
-	update "github.com/DEVLOPRR/appimage-update"
-	"github.com/DEVLOPRR/appimage-update/updaters"
+	"bread/src/helpers/repos"
 )
 
 type UpdateCmd struct {
@@ -21,6 +20,8 @@ var NoUpdateInfo = errors.New("there is no update information")
 
 // Function Which Will Be Executed When `update` is called.
 func (cmd *UpdateCmd) Run(debug bool) (err error) {
+	fmt.Println("Checking For Updates")
+
 	if cmd.All { // if `update all`
 		cmd.Targets, err = getAllTargets() // Load all the application info into targets
 		if err != nil {
@@ -39,37 +40,95 @@ func (cmd *UpdateCmd) Run(debug bool) (err error) {
 			continue
 		}
 
-		updateMethod, err := NewUpdater(entry.UpdateInfo, entry.FilePath)
+		repo, err := repos.ParseTarget(target, "")
+
 		if err != nil {
-			println(err.Error())
-			continue
+			return err
 		}
-
-		if debug == true { fmt.Println("Looking for updates of: ", entry.FilePath) }
-		updateAvailable, err := updateMethod.Lookup()
+	
+		release, err := repo.GetLatestRelease()
 		if err != nil {
-			println(err.Error())
-			continue
+			return err
+		}
+	
+		if release.Tag != entry.TagName {
+			if cmd.Check {
+				fmt.Println("Update Available: " + target + "#" + release.Tag)
+				return nil
+			}
+
+			fmt.Println("Updating: " + target + "#" + entry.TagName + " \U00002192 " + target + "#" + release.Tag)
+
+			// Show A Prompt To Select A AppImage File.
+			selectedBinary, err := utils.PromptBinarySelection(release.Files)
+			if err != nil {
+				return err
+			}
+
+			// Make A FilePath Out Of The AppImage Name
+			targetFilePath, err := utils.MakeTargetFilePath(selectedBinary)
+			if err != nil {
+				return err
+			}
+
+			// Check if the FilePath Exist, Show error
+			if _, err = os.Stat(targetFilePath); err == nil {
+				return ApplicationInstalled
+			}
+
+			// Download The AppImage
+			err = repo.Download(selectedBinary, targetFilePath)
+			if err != nil {
+				return err
+			}
+
+			registry, err := utils.OpenRegistry()
+			registry.Remove(entry.FilePath) // Remove old file from registry
+
+			// // Integrated The AppImage To Desktop
+			err = utils.CreateDesktopIntegration(targetFilePath, debug)
+			if err != nil {
+				os.Remove(targetFilePath)
+				return err
+			}
+
+			sha1hash, _ := utils.GetFileSHA1(targetFilePath)
+			appImageInfo, _ := utils.GetAppImageInfo(targetFilePath, debug)
+			err = registry.Add(utils.RegistryEntry{
+				Repo: target,
+				FilePath: targetFilePath,
+				FileSha1: sha1hash,
+				TagName: release.Tag,
+				IsTerminalApp: appImageInfo.IsTerminalApp,
+				AppImageType: appImageInfo.AppImageType,
+			})
+
+			if err != nil {
+				return err
+			}
+
+			// De-Integrate old app from desktop
+			err = utils.RemoveDesktopIntegration(entry.FilePath, debug)
+			if err != nil {
+				os.Remove(targetFilePath)
+				return err
+			}
+
+			registry.Remove(entry.FilePath)
+			err = registry.Close()
+			if err != nil {
+				return err
+			}
+
+			// Print Signature Info If Exist.
+			utils.ShowSignature(targetFilePath)
+
+			// Remove the old file
+			os.Remove(entry.FilePath)
 		}
 
-		if !updateAvailable {
-			fmt.Println("No updates were found for: ", entry.FilePath)
-			continue
-		}
-
-		if cmd.Check {
-			fmt.Println("Update available for: ", entry.FilePath)
-			continue
-		}
-
-		result, err := updateMethod.Download()
-		if err != nil {
-			println(err.Error())
-			continue
-		}
-
-		utils.ShowSignature(result)
-		fmt.Println("Update downloaded to: " + result)
+		// utils.ShowSignature(result)
+		fmt.Println("Updated: " + target)
 	}
 
 	return nil
@@ -111,28 +170,4 @@ func getAllTargets() ([]string, error) {
 	}
 
 	return paths, nil
-}
-
-func NewUpdater(updateInfoString string, appImagePath string) (update.Updater, error) {
-	if strings.HasPrefix(updateInfoString, "zsync") {
-		return updaters.NewZSyncUpdater(&updateInfoString, appImagePath)
-	}
-
-	if strings.HasPrefix(updateInfoString, "gh-releases-zsync") {
-		return updaters.NewGitHubZsyncUpdater(&updateInfoString, appImagePath)
-	}
-
-	if strings.HasPrefix(updateInfoString, "gh-releases-direct") {
-		return updaters.NewGitHubDirectUpdater(&updateInfoString, appImagePath)
-	}
-
-	if strings.HasPrefix(updateInfoString, "ocs-v1-appimagehub-direct") {
-		return updaters.NewOCSAppImageHubDirect(&updateInfoString, appImagePath)
-	}
-
-	if strings.HasPrefix(updateInfoString, "ocs-v1-appimagehub-zsync") {
-		return updaters.NewOCSAppImageHubZSync(&updateInfoString, appImagePath)
-	}
-
-	return nil, fmt.Errorf("invalid updated information: %q", updateInfoString)
 }
