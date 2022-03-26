@@ -15,9 +15,9 @@ var cli struct {
 	Remove     commands.RemoveCmd     `cmd:"" help:"Remove an application."`
 	Update     commands.UpdateCmd     `cmd:"" help:"Update an application."`
 	Search     commands.SearchCmd     `cmd:"" help:"Search for appliation from appimage list."`
-	Clean      commands.CleanCmd      `cmd:"" help:"Clean all the cache."`
-	Version    VersionFlag            `name:"version" help:"Print version information and quit"`
-	Debug      bool                   `help:"Show extra information for debugging." default:"false"`
+	Clean      commands.CleanCmd      `cmd:"" help:"Clean all the cache & unused registry entries."`
+	Version    VersionFlag            `name:"version" short:"v" help:"Print version information and quit"`
+	Debug      bool                   `short:"d" help:"Show extra information for debugging." default:"false"`
 }
 
 func (v VersionFlag) BeforeApply(app *kong.Kong, vars kong.Vars) error {
