@@ -13,16 +13,16 @@ AppDir:
     name: bread
     icon: bread
     version: !ENV ${BREAD_VERSION}
-    exec: bin/bread-${BREAD_VERSION}-x86_64
+    exec: bin/bread-${BREAD_VERSION}
     exec_args: $@
 
   apt:
-    arch: amd64
+    arch: [amd64, i386]
     sources:
-      - sourceline: 'deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ bionic main restricted universe multiverse'
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ bionic main restricted universe multiverse'
         key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x3b4fe6acc0b21f32'
-      - sourceline: 'deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ bionic-updates main restricted universe multiverse'
-      - sourceline: 'deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ bionic-backports main restricted universe multiverse'
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ bionic-updates main restricted universe multiverse'
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ bionic-backports main restricted universe multiverse'
       - sourceline: 'deb http://archive.neon.kde.org/dev/stable bionic main'
         key_url: 'http://archive.neon.kde.org/public.key'
 
@@ -38,5 +38,5 @@ AppDir:
 
 AppImage:
   update-information: 'gh-releases-zsync|DEVLOPRR|bread|latest|*x86_64.AppImage.zsync'
-  sign-key: 7E4721742F517EFD736F5EDC0BFD592D76127EDF
-  arch: x86_64
+  sign-key: None
+  arch: [amd64, i386]

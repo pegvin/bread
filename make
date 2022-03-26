@@ -10,7 +10,7 @@ DIST="build" # Output Directory Name
 VERSION="$(cat src/main.go | grep '"VERSION":' | grep -o '[0-9 .]*' | xargs)"
 ENTRY_FILE="src/main.go" # Main Entry File To Compile
 OUTPUT="$DIST/$BINARY" # Output Path Of Built Binary
-COMPRESSED_OUTPUT="$OUTPUT-$VERSION-x86_64" # Output path of the compressed binary
+COMPRESSED_OUTPUT="$OUTPUT-$VERSION" # Output path of the compressed binary
 
 if [[ $1 = '' || $1 = '--prod' ]]; then
 	echo "Compiling '$ENTRY_FILE' into '$DIST'"
