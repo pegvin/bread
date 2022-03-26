@@ -15,9 +15,20 @@ func (cmd *CleanCmd) Run(debug bool) (err error) {
 	if err != nil {
 		return err
 	}
-
 	// Remove that directory
 	os.RemoveAll(appTempDir)
-	fmt.Println("Cleaned All The Cache!")
+	fmt.Println("Cache Cleaned")
+
+	registry, err := utils.OpenRegistry()
+	if err != nil {
+		fmt.Println("Error While Cleaning Registry: " + err.Error())
+		fmt.Println("Skipping...")
+		return err
+	} else {
+		registry.Update()
+		registry.Close()
+		fmt.Println("Registry Cleaned")	
+	}
+
 	return nil
 }
