@@ -34,7 +34,7 @@ Install, update, remove & run AppImage from GitHub using your CLI. (Fork of [App
 
 ---
 
-### Removal
+## Removal
 
 Just Remove the binary
 ```bash
@@ -108,6 +108,11 @@ sudo rm -v /usr/local/bin/bread
   <p>You can list all the installed applications using list command</p>
   <pre><code>bread list</code></pre>
 </details>
+
+---
+
+### Bugs
+- Icons not showing in menus until there's a system reboot
 
 ---
 
