@@ -34,7 +34,7 @@ Install, update, remove & run AppImage from GitHub using your CLI. (Fork of [App
 
 ---
 
-### Removal
+## Removal
 
 Just Remove the binary
 ```bash
