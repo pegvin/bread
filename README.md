@@ -111,6 +111,11 @@ sudo rm -v /usr/local/bin/bread
 
 ---
 
+### Bugs
+- Icons not showing in menus until there's a system reboot
+
+---
+
 ## Tested On:
 - Ubuntu 20.04 - by me
 - Manjaro Linux - by me
