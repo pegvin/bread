@@ -197,7 +197,7 @@ To install the dependencies require to build go binary
 - [ ] Improve UI
 - [x] Make AppImages Runnable From Remote Without Installing (Done in v0.3.6)
 - [x] Work On Reducing Binary Sizes (Reduced From 11.1MB to 3.1MB)
-- [ ] Add 32 Bit Builds
+- [ ] Add 32 Bit Builds (Currently not possible since [DL](https://github.com/rainycape/dl) dependency is not available for 32 bit machines)
 - [ ] Add Auto Updater Which Can Update The Bread Itself
 - [x] Add `--version` To Get The Version (Done in v0.2.2)
 - [x] Mirrors:
