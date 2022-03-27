@@ -131,6 +131,11 @@ In the `Applications` there is also a file named `.registry.json` which contains
 In the `Applications` directory there is also a file named `.AppImageFeed.json` which is AppImage Catalog From [AppImage API](https://appimage.github.io/feed.json)
 
 ---
+## Related:
+- [A AppImage Manager Written in Shell](https://github.com/ivan-hc/AM-Application-Manager)
+- [The Original Tool Which Bread is Based On](https://github.com/AppImageCrafters/appimage-cli-tool)
+
+---
 
 ## Building From Source
 
