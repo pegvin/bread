@@ -118,6 +118,7 @@ sudo rm -v /usr/local/bin/bread
 
 ## Tested On:
 - Ubuntu 20.04 - by me
+- Debian 11 - by me
 - Manjaro Linux - by me
 - Arch Linux - by [my brother](https://github.com/idno34)
 
