@@ -5,6 +5,7 @@ Install, update, remove & run AppImage from GitHub using your CLI. (Fork of [App
 
 ## Features
 - Install from the GitHub Releases
+- Automatically Integrate App To Desktop When Installing/Updating
 - Run Applications From Remote Without Installing Them
 - Update with ease
 
