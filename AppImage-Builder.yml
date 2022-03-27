@@ -2,7 +2,7 @@ version: 1
 script:
   - rm -rf AppDir | true
   - mkdir -p AppDir/bin AppDir/usr/share/icons/hicolor/scalable/apps/
-  - cp ./build/bread-${BREAD_VERSION}-x86_64 AppDir/bin
+  - cp ./build/bread-${BREAD_VERSION} AppDir/bin
   - cp .github/bread.svg AppDir/usr/share/icons/hicolor/scalable/apps/
 
 AppDir:
@@ -17,7 +17,7 @@ AppDir:
     exec_args: $@
 
   apt:
-    arch: [amd64, i386]
+    arch: amd64
     sources:
       - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ bionic main restricted universe multiverse'
         key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x3b4fe6acc0b21f32'
@@ -39,4 +39,4 @@ AppDir:
 AppImage:
   update-information: 'gh-releases-zsync|DEVLOPRR|bread|latest|*x86_64.AppImage.zsync'
   sign-key: None
-  arch: [amd64, i386]
+  arch: x86_64
