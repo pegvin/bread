@@ -2,7 +2,7 @@ version: 1
 script:
   - rm -rf AppDir | true
   - mkdir -p AppDir/bin AppDir/usr/share/icons/hicolor/scalable/apps/
-  - cp ./build/bread-${BREAD_VERSION} AppDir/bin
+  - cp ./build/bread-${BREAD_VERSION}-x86_64 AppDir/bin
   - cp .github/bread.svg AppDir/usr/share/icons/hicolor/scalable/apps/
 
 AppDir:
@@ -13,7 +13,7 @@ AppDir:
     name: bread
     icon: bread
     version: !ENV ${BREAD_VERSION}
-    exec: bin/bread-${BREAD_VERSION}
+    exec: bin/bread-${BREAD_VERSION}-x86_64
     exec_args: $@
 
   apt:
