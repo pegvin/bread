@@ -20,7 +20,7 @@ Install, update, remove & run AppImage from GitHub using your CLI. (Fork of [App
   <p>install <code>libappimage</code> dependency</p>
   <pre><code>pacman -S libappimage</code></pre>
   <p>then install bread</p>
-  <pre><code>sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.5.0/bread-0.5.0-x86_64 -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread</code></pre>
+  <pre><code>sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.6.1/bread-0.6.1-x86_64 -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread</code></pre>
 </details>
 
 <details>
@@ -28,7 +28,7 @@ Install, update, remove & run AppImage from GitHub using your CLI. (Fork of [App
   <br>
   <p>you can use this step if your distribution doesn't provide <code>libappimage</code> v1.0.0 or greater, which is the case on Debian & it's derivatives</p>
   <p>get the appimage containing <code>libappimage</code> v1.0.3</p>
-  <pre><code>sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.5.0/bread-0.5.0-x86_64.AppImage -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread</code></pre>
+  <pre><code>sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.6.1/bread-0.6.1-x86_64.AppImage -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread</code></pre>
 </details>
 
 ***Any version of libappimage will work with bread but it is recommended to use v1.0.0 or greater, You can also Refer to this [list](https://repology.org/project/libappimage/versions) to check what version of libappimage your Distribution provides.***
@@ -108,6 +108,8 @@ sudo rm -v /usr/local/bin/bread
   <br>
   <p>You can list all the installed applications using list command</p>
   <pre><code>bread list</code></pre>
+  <p>If you also want to see the SHA1 Hashes of the applications listed, you can pass the `-s` or `--show-sha1` flag</p>
+  <pre><code>bread list --show-sha1</code></pre>
 </details>
 
 ---
