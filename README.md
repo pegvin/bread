@@ -108,7 +108,7 @@ sudo rm -v /usr/local/bin/bread
   <br>
   <p>You can list all the installed applications using list command</p>
   <pre><code>bread list</code></pre>
-  <p>If you also want to see the SHA1 Hashes of the applications listed, you can pass the `-s` or `--show-sha1` flag</p>
+  <p>If you also want to see the SHA1 Hashes of the applications listed, you can pass the <code>-s</code> or <code>--show-sha1</code> flag</p>
   <pre><code>bread list --show-sha1</code></pre>
 </details>
 
