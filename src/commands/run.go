@@ -1,57 +1,35 @@
 package commands
 
 import (
+	"os"
+	"errors"
 	"bread/src/helpers/repos"
 	"bread/src/helpers/utils"
-
-	"fmt"
-	"os"
-	goCmd "github.com/go-cmd/cmd"
+	"github.com/mgord9518/aisap"
 )
 
 type RunCmd struct {
 	Target string `arg:"" name:"target" help:"Target To Run" type:"string"`
+	Level  uint8   `arg:"" help:"Set Permission Level" type:"int" default:"0"`
 	Arguments []string `arg:"" passthrough:"" optional:"" name:"arguments" help:"Argument to pass to the program" type:"string"`
 }
 
-// Execute A Command With STDOUT & STDERR, & arguments
-func executeCmd(target string, arguments []string) {
-	options := goCmd.Options{
-		Buffered: false,
-		Streaming: true,
+func runAppImage(filePath string, permissionLevel uint8, arguments []string) (error) {
+	appImage, err := aisap.NewAppImage(filePath)
+	if err != nil {
+		return nil
 	}
-	runCmd := goCmd.NewCmdOptions(options, target, arguments...)
-
-	// Print STDOUT and STDERR lines streaming from Cmd
-	doneChan := make(chan struct{})
-	go func() {
-		defer close(doneChan)
-		for runCmd.Stdout != nil || runCmd.Stderr != nil {
-			select {
-			case line, open := <-runCmd.Stdout:
-				if !open {
-					runCmd.Stdout = nil
-					continue
-				}
-				fmt.Println(line)
-			case line, open := <-runCmd.Stderr:
-				if !open {
-					runCmd.Stderr = nil
-					continue
-				}
-				fmt.Fprintln(os.Stderr, line)
-			}
-		}
-	}()
-
-	// Run and wait for Cmd to return, discard Status
-	<-runCmd.Start()
-
-	// Wait for goroutine to print everything
-	<-doneChan
+	err = appImage.Perms.SetLevel(int(permissionLevel))
+	if err != nil {
+		return err
+	}
+	return appImage.Run(arguments)
 }
 
 func (cmd *RunCmd) Run(debug bool) (err error) {
+	if cmd.Level > 4 {
+		return errors.New("permission level can only be 0, 1, 2 or 3")
+	}
 	// Parse The user input
 	repo, err := repos.ParseTarget(cmd.Target, "")
 	if err != nil {
@@ -78,8 +56,7 @@ func (cmd *RunCmd) Run(debug bool) (err error) {
 
 	// Check if the FilePath Exist (cached file), Show error
 	if _, err = os.Stat(targetFilePath); err == nil {
-		executeCmd(targetFilePath, cmd.Arguments)
-		return nil
+		return runAppImage(targetFilePath, cmd.Level, cmd.Arguments)
 	}
 
 	// Download The AppImage
@@ -91,6 +68,5 @@ func (cmd *RunCmd) Run(debug bool) (err error) {
 	// Print Signature Info If Exist.
 	utils.ShowSignature(targetFilePath)
 
-	executeCmd(targetFilePath, cmd.Arguments)
-	return nil
+	return runAppImage(targetFilePath, cmd.Level, cmd.Arguments)
 }
