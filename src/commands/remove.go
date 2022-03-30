@@ -3,7 +3,7 @@ package commands
 import (
 	"fmt"
 	"bread/src/helpers/utils"
-	"github.com/DEVLOPRR/binding-libappimage-go"
+	"github.com/DEVLOPRR/libappimage-go"
 	"os"
 	"strings"
 )
