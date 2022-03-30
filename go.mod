@@ -3,8 +3,8 @@ module bread
 go 1.18
 
 require (
-	github.com/DEVLOPRR/appimage-update v0.0.0-20220320151851-03266073f0a4
-	github.com/DEVLOPRR/libappimage-go v0.0.0-20220322115926-417893b95c36
+	github.com/DEVLOPRR/appimage-update v0.0.0-20220329072345-3c229fbb98b9
+	github.com/DEVLOPRR/binding-libappimage-go v0.0.0-20220330004446-bd370e284221
 	github.com/alecthomas/kong v0.5.0
 	github.com/google/go-github/v31 v31.0.0
 	github.com/juju/ansiterm v0.0.0-20210929141451-8b71cc96ebdc
@@ -38,7 +38,7 @@ require (
 	github.com/rustyoz/genericlexer v0.0.0-20190224115003-eb82fd2987bd // indirect
 	github.com/rustyoz/svg v0.0.0-20200706102315-fe1aeca2ba20 // indirect
 	golang.org/x/net v0.0.0-20220325170049-de3da57026de // indirect
-	golang.org/x/sys v0.0.0-20220328115105-d36c6a25d886 // indirect
+	golang.org/x/sys v0.0.0-20220329152356-43be30ef3008 // indirect
 	golang.org/x/term v0.0.0-20210927222741-03fcf44c2211 // indirect
 	gopkg.in/ini.v1 v1.66.4 // indirect
 )
