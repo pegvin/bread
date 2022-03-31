@@ -7,19 +7,20 @@ BINARY="bread" # Output Binary Name
 DIST="build" # Output Directory Name
 
 # Simple Hack To Get The Version Number From main.go file
-VERSION="$(cat src/main.go | grep '"VERSION":' | grep -o '[0-9 .]*' | xargs)"
+VERSION="0.6.1"
 ENTRY_FILE="src/main.go" # Main Entry File To Compile
 OUTPUT="$DIST/$BINARY" # Output Path Of Built Binary
 COMPRESSED_OUTPUT="$OUTPUT-$VERSION-x86_64" # Output path of the compressed binary
+COMMIT_HASH=$(git log --pretty=format:'%h' -n 1)
 
 if [[ $1 = '' || $1 = '--prod' ]]; then
 	echo "Compiling '$ENTRY_FILE' into '$DIST'"
 	if [[ $1 = '--prod' ]]; then
 		# When building for production use some ldflags and upx to reduce the binary size
-		${COMPILER} build -ldflags "-s -w" -o ${OUTPUT} -v ${ENTRY_FILE}
+		${COMPILER} build -ldflags "-s -w -X main.VERSION=${VERSION}" -o ${OUTPUT} -v ${ENTRY_FILE}
 		upx -9 -o ${COMPRESSED_OUTPUT} ${OUTPUT}
 	else
-		${COMPILER} build -o ${OUTPUT} -v ${ENTRY_FILE}
+		${COMPILER} build -ldflags "-X main.VERSION=${VERSION}" -o ${OUTPUT} -v ${ENTRY_FILE}
 	fi
 	echo "Compiled Successfully into '$OUTPUT'"
 elif [[ $1 = 'appimage' ]]; then
