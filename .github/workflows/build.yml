@@ -3,13 +3,13 @@ name: Build Action
 on: 
   push:
     branches: [ main ]
-    paths:
-    - 'src/**'
-    - 'go.mod'
-    - 'go.sum'
-    - 'make'
-    - 'AppImage-Builder.yml'
-    - '.github/**'
+    # paths:
+    # - 'src/**'
+    # - 'go.mod'
+    # - 'go.sum'
+    # - 'make'
+    # - 'AppImage-Builder.yml'
+    # - '.github/**'
 
 jobs:
   test-build:
