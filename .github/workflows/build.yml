@@ -7,6 +7,9 @@ on:
     - 'src/**'
     - 'go.mod'
     - 'go.sum'
+    - 'make'
+    - 'AppImage-Builder.yml'
+    - '.github/**'
 
 jobs:
   test-build:
