@@ -6,6 +6,9 @@ import (
 	"github.com/alecthomas/kong"
 )
 
+// Variable Which will be set on the compile time using ldflags
+var VERSION string
+
 type VersionFlag bool
 
 var cli struct {
@@ -21,7 +24,11 @@ var cli struct {
 }
 
 func (v VersionFlag) BeforeApply(app *kong.Kong, vars kong.Vars) error {
-	fmt.Println("Bread v" + vars["VERSION"])
+	if VERSION == "" {
+		fmt.Println("Unknown Custom Build")
+	} else {
+		fmt.Println("Bread v" + VERSION)
+	}
 	app.Exit(0)
 	return nil
 }
@@ -34,10 +41,7 @@ func main() {
 		kong.UsageOnError(),
 		kong.ConfigureHelp(kong.HelpOptions{
 			Compact: true,
-		}),
-		kong.Vars{
-			"VERSION": "0.6.1",
-		})
+		}))
 	// Call the Run() method of the selected parsed command.
 	err := ctx.Run(cli.Debug)
 	ctx.FatalIfErrorf(err)
