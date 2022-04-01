@@ -50,7 +50,8 @@ func DownloadFile(url string, filePath string, permission fs.FileMode, barText s
 
 		_ = resp.Body.Close()
 		_ = output.Close()
-		fmt.Println(os.Remove(filePath))
+		_ = os.Remove(filePath)
+		_ = os.RemoveAll(tempDir)
 
 		fmt.Println("Ctrl + C, Removing Downloaded File & Exiting.")
 		os.Exit(0)
