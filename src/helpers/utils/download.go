@@ -1,17 +1,31 @@
 package utils
 
 import (
+	"fmt"
 	"io"
-	"os"
 	"io/fs"
+	"io/ioutil"
 	"net/http"
+	"os"
 	"os/signal"
+	"path/filepath"
 	"github.com/schollz/progressbar/v3"
 )
 
 // Download a file from remote
 func DownloadFile(url string, filePath string, permission fs.FileMode, barText string) (err error) {
-	output, err := os.OpenFile(filePath, os.O_RDWR|os.O_CREATE, permission)
+	appDir, err := MakeApplicationsDirPath()
+	if err != nil {
+		return err
+	}
+
+	tempDir, err := ioutil.TempDir(appDir, "temp")
+	if err != nil {
+		return err
+	}
+
+	tempFilePath := tempDir + "/" + filepath.Base(filePath)
+	output, err := os.OpenFile(tempFilePath, os.O_RDWR|os.O_CREATE, permission)
 	if err != nil {
 		return err
 	}
@@ -28,6 +42,7 @@ func DownloadFile(url string, filePath string, permission fs.FileMode, barText s
 		barText,
 	)
 
+	// Handles Ctrl + C Detection
 	go func() {
 		sigchan := make(chan os.Signal, 1)
 		signal.Notify(sigchan, os.Interrupt)
@@ -35,11 +50,17 @@ func DownloadFile(url string, filePath string, permission fs.FileMode, barText s
 
 		_ = resp.Body.Close()
 		_ = output.Close()
-		_ = os.Remove(filePath)
+		fmt.Println(os.Remove(filePath))
 
+		fmt.Println("Ctrl + C, Removing Downloaded File & Exiting.")
 		os.Exit(0)
 	}()
 
 	_, err = io.Copy(io.MultiWriter(output, bar), resp.Body)
-	return err
+	err = os.Rename(tempFilePath, filePath)
+	if err != nil {
+		return err
+	}
+
+	return os.RemoveAll(tempDir)
 }
