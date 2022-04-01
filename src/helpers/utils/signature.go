@@ -10,7 +10,7 @@ import (
 	"crypto/sha1"
 	"encoding/hex"
 	"crypto/sha256"
-	"golang.org/x/crypto/openpgp"
+	"github.com/ProtonMail/go-crypto/openpgp"
 )
 
 // Function to verify signature
@@ -44,7 +44,7 @@ func VerifySignature(target string) (result *openpgp.Entity, err error) {
 		return nil, err
 	}
 
-	entity, err := openpgp.CheckArmoredDetachedSignature(keyring, strings.NewReader(verification_target), bytes.NewReader(signature))
+	entity, err := openpgp.CheckArmoredDetachedSignature(keyring, strings.NewReader(verification_target), bytes.NewReader(signature), nil)
 	if err != nil {
 		return nil, err
 	}

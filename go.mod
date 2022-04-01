@@ -5,6 +5,7 @@ go 1.18
 require (
 	github.com/DEVLOPRR/appimage-update v0.0.0-20220329072345-3c229fbb98b9
 	github.com/DEVLOPRR/libappimage-go v0.0.0-20220330021623-5d18529938c8
+	github.com/ProtonMail/go-crypto v0.0.0-20220113124808-70ae35bab23f
 	github.com/alecthomas/kong v0.5.0
 	github.com/google/go-github/v31 v31.0.0
 	github.com/juju/ansiterm v0.0.0-20210929141451-8b71cc96ebdc
@@ -12,7 +13,6 @@ require (
 	github.com/mgord9518/aisap v0.5.4-alpha
 	github.com/microcosm-cc/bluemonday v1.0.18
 	github.com/schollz/progressbar/v3 v3.8.6
-	golang.org/x/crypto v0.0.0-20220331220935-ae2d96664a29
 )
 
 require (
@@ -37,6 +37,7 @@ require (
 	github.com/rustyoz/Mtransform v0.0.0-20190224104252-60c8c35a3681 // indirect
 	github.com/rustyoz/genericlexer v0.0.0-20190224115003-eb82fd2987bd // indirect
 	github.com/rustyoz/svg v0.0.0-20200706102315-fe1aeca2ba20 // indirect
+	golang.org/x/crypto v0.0.0-20220331220935-ae2d96664a29 // indirect
 	golang.org/x/net v0.0.0-20220325170049-de3da57026de // indirect
 	golang.org/x/sys v0.0.0-20220330033206-e17cdc41300f // indirect
 	golang.org/x/term v0.0.0-20210927222741-03fcf44c2211 // indirect
