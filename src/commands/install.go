@@ -8,8 +8,6 @@ import (
 	"bread/src/helpers/utils"
 )
 
-var ApplicationInstalled = errors.New("the application is installed already")
-
 type InstallCmd struct {
 	Target string `arg:"" name:"target" help:"Installation target." type:"string"`
 	TagName string `arg:"" optional:"" name:"tagname" help:"GitHub Release TagName To Download From." type:"string"`
@@ -47,7 +45,7 @@ func (cmd *InstallCmd) Run(debug bool) (err error) {
 
 	// Check if the FilePath Exist, Show error
 	if _, err = os.Stat(targetFilePath); err == nil {
-		return ApplicationInstalled
+		return errors.New("the application is installed already")
 	}
 
 	// Download The AppImage
@@ -77,11 +75,6 @@ func (cmd *InstallCmd) Run(debug bool) (err error) {
 // Function To Add Installed Program To Registry (Installed App information is stored in here).
 func (cmd *InstallCmd) addToRegistry(targetFilePath string, repo repos.Application, TagName string, debug bool) (error) {
 	sha1, _ := utils.GetFileSHA1(targetFilePath) // Get The Sha1 Hash
-	updateInfo, _ := utils.ReadUpdateInfo(targetFilePath) // Get The UpdateInfo
-	if updateInfo == "" {
-		updateInfo = repo.FallBackUpdateInfo()
-	}
-
 	appimageInfo, err := utils.GetAppImageInfo(targetFilePath, debug)
 	if err != nil {
 		return err
@@ -92,10 +85,7 @@ func (cmd *InstallCmd) addToRegistry(targetFilePath string, repo repos.Applicati
 		Repo:       repo.Id(),
 		TagName:    TagName,
 		FileSha1:   sha1,
-		// AppName:    "",
-		// AppVersion: "",
 		FilePath:   targetFilePath,
-		UpdateInfo: updateInfo,
 		IsTerminalApp: appimageInfo.IsTerminalApp,
 		AppImageType: appimageInfo.AppImageType,
 	}
