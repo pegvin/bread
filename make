@@ -7,7 +7,7 @@ BINARY="bread" # Output Binary Name
 DIST="build" # Output Directory Name
 
 # Simple Hack To Get The Version Number From main.go file
-VERSION="0.6.1"
+VERSION="0.6.2"
 ENTRY_FILE="src/main.go" # Main Entry File To Compile
 OUTPUT="$DIST/$BINARY" # Output Path Of Built Binary
 COMPRESSED_OUTPUT="$OUTPUT-$VERSION-x86_64" # Output path of the compressed binary
@@ -38,6 +38,9 @@ elif [[ $1 = 'clean' ]]; then
 	rm -rfv AppDir
 	rm -rfv bread-*.AppImage*
 	echo 'Done!'
+elif [[ $1 = 'reg' ]]; then
+	# Simple hacky way to pretty print `.registry.json` in user's home dir
+	node -e 'console.log(JSON.parse(require("fs").readFileSync(`${require("os").homedir()}/Applications/.registry.json`)))'
 else
 	echo "Build Script '$1' Not Found!"
 fi
