@@ -19,7 +19,7 @@ type UpdateCmd struct {
 // Function Which Will Be Executed When `update` is called.
 func (cmd *UpdateCmd) Run(debug bool) (err error) {
 	// Variable which will hold if any app was updated.
-	var howManyAppsUpdated int = 0
+	var howManyUpdates int = 0
 
 	fmt.Println("Checking For Updates")
 
@@ -58,6 +58,7 @@ func (cmd *UpdateCmd) Run(debug bool) (err error) {
 
 		if cmd.Check {
 			fmt.Println("Update Available: " + target + "#" + release.Tag)
+			howManyUpdates++
 			continue
 		}
 
@@ -140,13 +141,21 @@ func (cmd *UpdateCmd) Run(debug bool) (err error) {
 
 		// utils.ShowSignature(result)
 		fmt.Println("Updated: " + target)
-		howManyAppsUpdated++
+		howManyUpdates++
 	}
 
-	if howManyAppsUpdated == 0 {
-		fmt.Println("No Updates Found!")
+	if cmd.Check {
+		if howManyUpdates == 0 {
+			fmt.Println("No Updates Found!")
+		} else {
+			fmt.Println("Update Available For", howManyUpdates, "Application(s)")
+		}
 	} else {
-		fmt.Println("Updated", howManyAppsUpdated, "Application(s)")
+		if howManyUpdates == 0 {
+			fmt.Println("No Updates Found!")
+		} else {
+			fmt.Println("Updated", howManyUpdates, "Application(s)")
+		}
 	}
 
 	return nil
