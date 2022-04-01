@@ -1,12 +1,12 @@
 package commands
 
 import (
-	"os"
-	"fmt"
-	"errors"
-	"strings"
-	"bread/src/helpers/utils"
 	"bread/src/helpers/repos"
+	"bread/src/helpers/utils"
+	"fmt"
+	"os"
+	"path/filepath"
+	"strings"
 )
 
 type UpdateCmd struct {
@@ -16,10 +16,11 @@ type UpdateCmd struct {
 	All   bool `help:"Update all applications."`
 }
 
-var NoUpdateInfo = errors.New("there is no update information")
-
 // Function Which Will Be Executed When `update` is called.
 func (cmd *UpdateCmd) Run(debug bool) (err error) {
+	// Variable which will hold if any app was updated.
+	var howManyAppsUpdated int = 0
+
 	fmt.Println("Checking For Updates")
 
 	if cmd.All { // if `update all`
@@ -50,85 +51,102 @@ func (cmd *UpdateCmd) Run(debug bool) (err error) {
 		if err != nil {
 			return err
 		}
-	
-		if release.Tag != entry.TagName {
-			if cmd.Check {
-				fmt.Println("Update Available: " + target + "#" + release.Tag)
-				return nil
-			}
 
-			fmt.Println("Updating: " + target + "#" + entry.TagName + " \U00002192 " + target + "#" + release.Tag)
-
-			// Show A Prompt To Select A AppImage File.
-			selectedBinary, err := utils.PromptBinarySelection(release.Files)
-			if err != nil {
-				return err
-			}
-
-			// Make A FilePath Out Of The AppImage Name
-			targetFilePath, err := utils.MakeTargetFilePath(selectedBinary)
-			if err != nil {
-				return err
-			}
-
-			// Check if the FilePath Exist, Show error
-			if _, err = os.Stat(targetFilePath); err == nil {
-				return ApplicationInstalled
-			}
-
-			// Download The AppImage
-			err = repo.Download(selectedBinary, targetFilePath)
-			if err != nil {
-				return err
-			}
-
-			registry, err := utils.OpenRegistry()
-			registry.Remove(entry.FilePath) // Remove old file from registry
-
-			// // Integrated The AppImage To Desktop
-			err = utils.CreateDesktopIntegration(targetFilePath, debug)
-			if err != nil {
-				os.Remove(targetFilePath)
-				return err
-			}
-
-			sha1hash, _ := utils.GetFileSHA1(targetFilePath)
-			appImageInfo, _ := utils.GetAppImageInfo(targetFilePath, debug)
-			err = registry.Add(utils.RegistryEntry{
-				Repo: target,
-				FilePath: targetFilePath,
-				FileSha1: sha1hash,
-				TagName: release.Tag,
-				IsTerminalApp: appImageInfo.IsTerminalApp,
-				AppImageType: appImageInfo.AppImageType,
-			})
-
-			if err != nil {
-				return err
-			}
-
-			// De-Integrate old app from desktop
-			err = utils.RemoveDesktopIntegration(entry.FilePath, debug)
-			if err != nil {
-				os.Remove(targetFilePath)
-				return err
-			}
-
-			registry.Remove(entry.FilePath)
-			err = registry.Close()
-			if err != nil {
-				return err
-			}
-
-			// Print Signature Info If Exist.
-			utils.ShowSignature(targetFilePath)
-
-			// Remove the old file
-			os.Remove(entry.FilePath)
+		if release.Tag == entry.TagName {
+			continue
 		}
+
+		if cmd.Check {
+			fmt.Println("Update Available: " + target + "#" + release.Tag)
+			continue
+		}
+
+		fmt.Println("Updating: " + target + "#" + entry.TagName + " \U00002192 " + target + "#" + release.Tag)
+
+		var selectedBinary *utils.BinaryUrl;
+		for fileIndex := range release.Files {
+			if filepath.Base(entry.FilePath) == release.Files[fileIndex].FileName {
+				selectedBinary = &release.Files[fileIndex]
+				break
+			}
+		}
+
+		if selectedBinary == nil {
+			// Show A Prompt To Select A AppImage File.
+			selectedBinary, err = utils.PromptBinarySelection(release.Files)
+			if err != nil {
+				return err
+			}
+		}
+
+		// Make A FilePath Out Of The AppImage Name
+		targetFilePath, err := utils.MakeTargetFilePath(selectedBinary)
+		if err != nil {
+			return err
+		}
+
+		// Download The AppImage
+		err = repo.Download(selectedBinary, targetFilePath)
+		if err != nil {
+			return err
+		}
+
+		registry, err := utils.OpenRegistry()
+		registry.Remove(entry.FilePath) // Remove old file from registry
+
+		if err != nil {
+			return err
+		}
+
+		// Integrated The AppImage To Desktop
+		err = utils.CreateDesktopIntegration(targetFilePath, debug)
+		if err != nil {
+			os.Remove(targetFilePath)
+			return err
+		}
+
+		sha1hash, _ := utils.GetFileSHA1(targetFilePath)
+		appImageInfo, _ := utils.GetAppImageInfo(targetFilePath, debug)
+		err = registry.Add(utils.RegistryEntry{
+			Repo: target,
+			FilePath: targetFilePath,
+			FileSha1: sha1hash,
+			TagName: release.Tag,
+			IsTerminalApp: appImageInfo.IsTerminalApp,
+			AppImageType: appImageInfo.AppImageType,
+		})
+
+		if err != nil {
+			return err
+		}
+
+		// De-Integrate old app from desktop
+		err = utils.RemoveDesktopIntegration(entry.FilePath, debug)
+		if err != nil {
+			os.Remove(targetFilePath)
+			return err
+		}
+
+		registry.Remove(entry.FilePath)
+		err = registry.Close()
+			if err != nil {
+			return err
+		}
+
+		// Print Signature Info If Exist.
+		utils.ShowSignature(targetFilePath)
+		// Remove the old file
+		os.Remove(entry.FilePath)
 
 		// utils.ShowSignature(result)
 		fmt.Println("Updated: " + target)
+		howManyAppsUpdated++
+	}
+
+	if howManyAppsUpdated == 0 {
+		fmt.Println("No Updates Found!")
+	} else {
+		fmt.Println("Updated", howManyAppsUpdated, "Application(s)")
 	}
 
 	return nil
@@ -143,17 +161,9 @@ func (cmd *UpdateCmd) getRegistryEntry(target string) (utils.RegistryEntry, erro
 	defer registry.Close()
 
 	entry, _ := registry.Lookup(target)
+	entry.FilePath = target
 
-	if entry.UpdateInfo == "" {
-		entry.UpdateInfo, _ = utils.ReadUpdateInfo(target)
-		entry.FilePath = target
-	}
-
-	if entry.UpdateInfo == "" {
-		return entry, NoUpdateInfo
-	} else {
-		return entry, nil
-	}
+	return entry, nil
 }
 
 // Get all the applications from the registry
@@ -164,10 +174,11 @@ func getAllTargets() ([]string, error) {
 	}
 	registry.Update()
 
-	var paths []string
+	var repos []string
 	for k := range registry.Entries {
-		paths = append(paths, k)
+		entry, _ := registry.Lookup(k)
+		repos = append(repos, entry.Repo)
 	}
 
-	return paths, nil
+	return repos, nil
 }
