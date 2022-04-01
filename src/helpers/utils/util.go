@@ -7,11 +7,9 @@ import "C"
 import (
 	"os"
 	"fmt"
-	"bytes"
 	"os/user"
 	"net/url"
 	"strings"
-	"debug/elf"
 	"path/filepath"
 	"github.com/manifoldco/promptui"
 )
@@ -124,27 +122,27 @@ func PromptBinarySelection(downloadLinks []BinaryUrl) (result *BinaryUrl, err er
 }
 
 // read the update info embeded into the appimage file
-func ReadUpdateInfo(appImagePath string) (string, error) {
-	elfFile, err := elf.Open(appImagePath)
-	if err != nil {
-		panic("Unable to open target: \"" + appImagePath + "\"." + err.Error())
-	}
+// func ReadUpdateInfo(appImagePath string) (string, error) {
+// 	elfFile, err := elf.Open(appImagePath)
+// 	if err != nil {
+// 		panic("Unable to open target: \"" + appImagePath + "\"." + err.Error())
+// 	}
 
-	updInfo := elfFile.Section(".upd_info")
-	if updInfo == nil {
-		panic("Missing update section on target elf ")
-	}
-	sectionData, err := updInfo.Data()
+// 	updInfo := elfFile.Section(".upd_info")
+// 	if updInfo == nil {
+// 		panic("Missing update section on target elf ")
+// 	}
+// 	sectionData, err := updInfo.Data()
 
-	if err != nil {
-		panic("Unable to parse update section: " + err.Error())
-	}
+// 	if err != nil {
+// 		panic("Unable to parse update section: " + err.Error())
+// 	}
 
-	str_end := bytes.Index(sectionData, []byte("\000"))
-	if str_end == -1 || str_end == 0 {
-		return "", fmt.Errorf("No update information found in: " + appImagePath)
-	}
+// 	str_end := bytes.Index(sectionData, []byte("\000"))
+// 	if str_end == -1 || str_end == 0 {
+// 		return "", fmt.Errorf("No update information found in: " + appImagePath)
+// 	}
 
-	update_info := string(sectionData[:str_end])
-	return update_info, nil
-}
+// 	update_info := string(sectionData[:str_end])
+// 	return update_info, nil
+// }
