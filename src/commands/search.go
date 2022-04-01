@@ -16,6 +16,10 @@ func (cmd *SearchCmd) Run(debug bool) (error) {
 	var err error
 	fmt.Println("Updating Catalog Data...")
 	err = utils.FetchAppImageCatalog()
+	if err != nil {
+		return err
+	}
+
 	cmd.Name = strings.ToLower(cmd.Name)
 
 	jsonData, err := utils.ReadAppImageCatalog()
