@@ -25,6 +25,7 @@ jobs:
 
       - name: Get dependencies
         run: |
+          sudo apt-get install upx
           go get -v -t -d ./...
           go mod tidy
           if [ -f Gopkg.toml ]; then
