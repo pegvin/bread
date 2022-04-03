@@ -22,8 +22,6 @@ func (cmd *UpdateCmd) Run() (err error) {
 	// Variable which will hold if any app was updated.
 	var howManyUpdates int = 0
 
-	fmt.Println("Checking For Updates")
-
 	if cmd.All { // if `update all`
 		cmd.Targets, err = getAllTargets() // Load all the application info into targets
 		if err != nil {
@@ -31,6 +29,12 @@ func (cmd *UpdateCmd) Run() (err error) {
 		}
 	}
 
+	if len(cmd.Targets) == 0 {
+		fmt.Println("No Application Installed")
+		return nil
+	}
+
+	fmt.Println("Checking For Updates")
 	for _, target := range cmd.Targets {
 		if len(strings.Split(target, "/")) < 2 {
 			target = strings.ToLower(target + "/" + target)
