@@ -34,8 +34,7 @@ func (cmd *SearchCmd) Run() (error) {
 	)
 
 	// This Loop Will Check if the name of description has our search target
-	for index := range jsonData.Items {
-		item := jsonData.Items[index]
+	for _, item := range jsonData.Items {
 		item.Name = strings.ToLower(item.Name)
 		item.Description = strings.ToLower(item.Description)
 		if strings.Contains(item.Name, cmd.Name) || strings.Contains(item.Description, cmd.Name) {
@@ -72,10 +71,10 @@ func (cmd *SearchCmd) Run() (error) {
 	if len(foundItems) == 0 {
 		fmt.Println("Nothing Found in the catalog!")
 	} else {
-		for foundIndex := range foundItems {
-			fmt.Println("\n" + foundItems[foundIndex].Name + " - " + foundItems[foundIndex].Links[0].Url)
-			if foundItems[foundIndex].Description != "" {
-				fmt.Println("  " + foundItems[foundIndex].Description)
+		for _, foundItems := range foundItems {
+			fmt.Println("\n" + foundItems.Name + " - " + foundItems.Links[0].Url)
+			if foundItems.Description != "" {
+				fmt.Println("  " + foundItems.Description)
 			} else {
 				fmt.Println("  No Description provided from Author!")
 			}
