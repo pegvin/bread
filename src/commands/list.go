@@ -25,6 +25,7 @@ func (r *ListCmd) Run() error {
 	registry.Update() // Update the registry with latest application info
 	if len(registry.Entries) == 0 {
 		fmt.Println("No installed Applications Found!")
+		return nil
 	}
 
 	var buf bytes.Buffer // Buffer which will hold the table
