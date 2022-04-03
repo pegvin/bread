@@ -65,8 +65,9 @@ func (g GitHubRepo) Id() string {
 }
 
 // Gets the latest/specified tagged release from github
-func (g GitHubRepo) GetLatestRelease() (*Release, error) {
+func (g GitHubRepo) GetLatestRelease(NoPreRelease bool) (*Release, error) {
 	client := github.NewClient(nil) // Client For Interacting with github api
+	client.RateLimits(context.Background())
 	// Get all the releases from the target
 	releases, _, err := client.Repositories.ListReleases(context.Background(), g.User, g.Project, nil)
 	if err != nil {
@@ -92,10 +93,12 @@ func (g GitHubRepo) GetLatestRelease() (*Release, error) {
 		if *release.Draft {
 			continue
 		}
+		if *release.Prerelease && NoPreRelease {
+			continue
+		}
 
 		downloadLinks := getAppImageFilesFromRelease(release)
 		if len(downloadLinks) > 0 {
-			g.TagName = *release.TagName
 			return &Release{
 				*release.TagName,
 				downloadLinks,

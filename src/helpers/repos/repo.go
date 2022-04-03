@@ -12,7 +12,7 @@ type Release struct {
 
 type Application interface {
 	Id() string
-	GetLatestRelease() (*Release, error)
+	GetLatestRelease(NoPreRelease bool) (*Release, error)
 	Download(binaryUrl *utils.BinaryUrl, targetPath string) error
 	FallBackUpdateInfo() string
 }
