@@ -67,7 +67,7 @@ func (g GitHubRepo) Id() string {
 // Gets the latest/specified tagged release from github
 func (g GitHubRepo) GetLatestRelease(NoPreRelease bool) (*Release, error) {
 	client := github.NewClient(nil) // Client For Interacting with github api
-	client.RateLimits(context.Background())
+
 	// Get all the releases from the target
 	releases, _, err := client.Repositories.ListReleases(context.Background(), g.User, g.Project, nil)
 	if err != nil {
