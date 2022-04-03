@@ -116,6 +116,10 @@ sudo rm -v /usr/local/bin/bread
 
 ### Bugs
 - Icons not showing in menus until there's a system reboot
+- Update Command Crashing
+
+### Limits
+- Bread uses GitHub API to get information about a repository and it's release, but without authentication GitHub API limits the request per hour.
 
 ---
 
