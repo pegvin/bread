@@ -9,8 +9,9 @@ import (
 )
 
 type InstallCmd struct {
-	Target string `arg:"" name:"target" help:"Installation target." type:"string"`
-	TagName string `arg:"" optional:"" name:"tagname" help:"GitHub Release TagName To Download From." type:"string"`
+	Target         string `arg:"" name:"target" help:"Installation target." type:"string"`
+	TagName        string `arg:"" optional:"" name:"tagname" help:"GitHub Release TagName To Download From." type:"string"`
+	NoPreRelease   bool `short:"n" help:"Disable pre-releases." default:"false"`
 }
 
 // Function Which Will Be Called When `install` is the Command.
@@ -22,7 +23,7 @@ func (cmd *InstallCmd) Run(debug bool) (err error) {
 	}
 
 	// Get The Latest Release
-	release, err := repo.GetLatestRelease()
+	release, err := repo.GetLatestRelease(cmd.NoPreRelease)
 	if err != nil {
 		return err
 	}

@@ -9,9 +9,10 @@ import (
 )
 
 type RunCmd struct {
-	Target string `arg:"" name:"target" help:"Target To Run" type:"string"`
-	Level  uint8   `arg:"" help:"Set Permission Level" type:"int" default:"0"`
-	Arguments []string `arg:"" passthrough:"" optional:"" name:"arguments" help:"Argument to pass to the program" type:"string"`
+	Target         string `arg:"" name:"target" help:"Target To Run" type:"string"`
+	Level          uint8   `arg:"" help:"Set Permission Level" type:"int" default:"0"`
+	Arguments    []string `arg:"" passthrough:"" optional:"" name:"arguments" help:"Argument to pass to the program" type:"string"`
+	NoPreRelease   bool `short:"n" help:"Disable pre-releases." default:"false"`
 }
 
 func runAppImage(filePath string, permissionLevel uint8, arguments []string) (error) {
@@ -37,7 +38,7 @@ func (cmd *RunCmd) Run(debug bool) (err error) {
 	}
 
 	// Get The Latest Release
-	release, err := repo.GetLatestRelease()
+	release, err := repo.GetLatestRelease(cmd.NoPreRelease)
 	if err != nil {
 		return err
 	}

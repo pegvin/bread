@@ -12,8 +12,9 @@ import (
 type UpdateCmd struct {
 	Targets []string `arg:"" optional:"" name:"targets" help:"Update the target/all applications." type:"string"`
 
-	Check bool `help:"Only check for updates."`
-	All   bool `help:"Update all applications."`
+	Check          bool `short:"c" help:"Only check for updates."`
+	All            bool `short:"a" help:"Update/check all applications."`
+	NoPreRelease   bool `short:"n" help:"Disable pre-releases." default:"false"`
 }
 
 // Function Which Will Be Executed When `update` is called.
@@ -36,6 +37,7 @@ func (cmd *UpdateCmd) Run(debug bool) (err error) {
 		} else if len(strings.Split(target, "/")) == 2 {
 			target = strings.ToLower(target)
 		}
+
 		entry, err := cmd.getRegistryEntry(target)
 		if err != nil {
 			continue
@@ -47,9 +49,11 @@ func (cmd *UpdateCmd) Run(debug bool) (err error) {
 			return err
 		}
 	
-		release, err := repo.GetLatestRelease()
+		release, err := repo.GetLatestRelease(cmd.NoPreRelease)
 		if err != nil {
-			return err
+			fmt.Println(target, "\U00002192", err)
+			continue
+			// return err
 		}
 
 		if release.Tag == entry.TagName {
@@ -57,7 +61,7 @@ func (cmd *UpdateCmd) Run(debug bool) (err error) {
 		}
 
 		if cmd.Check {
-			fmt.Println("Update Available: " + target + "#" + release.Tag)
+			fmt.Println(target, "\U00002192", release.Tag)
 			howManyUpdates++
 			continue
 		}
@@ -130,12 +134,13 @@ func (cmd *UpdateCmd) Run(debug bool) (err error) {
 
 		registry.Remove(entry.FilePath)
 		err = registry.Close()
-			if err != nil {
+		if err != nil {
 			return err
 		}
 
 		// Print Signature Info If Exist.
 		utils.ShowSignature(targetFilePath)
+
 		// Remove the old file
 		os.Remove(entry.FilePath)
 
