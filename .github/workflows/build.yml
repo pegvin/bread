@@ -32,7 +32,7 @@ jobs:
               dep ensure
           fi
       - name: Build
-        run: ./make
+        run: ./make --prod
       - name: Update Continous Release
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
