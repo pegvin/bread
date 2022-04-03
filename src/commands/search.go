@@ -12,7 +12,7 @@ type SearchCmd struct {
 	Name string `arg:"" name:"name" help:"name to search for." type:"string"`
 }
 
-func (cmd *SearchCmd) Run(debug bool) (error) {
+func (cmd *SearchCmd) Run() (error) {
 	var err error
 	fmt.Println("Updating Catalog Data...")
 	err = utils.FetchAppImageCatalog()

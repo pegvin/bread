@@ -9,7 +9,7 @@ import (
 type CleanCmd struct {
 }
 
-func (cmd *CleanCmd) Run(debug bool) (err error) {
+func (cmd *CleanCmd) Run() (err error) {
 	// Get the `run-cache` directory path
 	appTempDir, err := utils.MakeTempAppDirPath()
 	if err != nil {

@@ -7,7 +7,7 @@ import (
 )
 
 // Get AppImage information: isTerminalApp, AppImageType
-func GetAppImageInfo(targetFilePath string, debug bool) (*AppImageInfo, error) {
+func GetAppImageInfo(targetFilePath string) (*AppImageInfo, error) {
 	libAppImage, err := libappimagego.NewLibAppImageBindings() // Load the `libappimage` Library For Integration
 	if err != nil {
 		return nil, err
@@ -15,12 +15,12 @@ func GetAppImageInfo(targetFilePath string, debug bool) (*AppImageInfo, error) {
 
 	return &AppImageInfo{
 		IsTerminalApp: libAppImage.IsTerminalApp(targetFilePath),
-		AppImageType: libAppImage.GetType(targetFilePath, debug),
+		AppImageType: libAppImage.GetType(targetFilePath, false),
 	}, nil
 }
 
 // Remove the application desktop integration
-func RemoveDesktopIntegration(filePath string, debug bool) (error) {
+func RemoveDesktopIntegration(filePath string) (error) {
 	libAppImage, err := libappimagego.NewLibAppImageBindings()
 	if err != nil {
 		return err
@@ -30,18 +30,18 @@ func RemoveDesktopIntegration(filePath string, debug bool) (error) {
 		return nil
 	}
 
-	err = libAppImage.Unregister(filePath, debug)
+	err = libAppImage.Unregister(filePath, false)
 	return err
 }
 
 // Integrate The AppImage To Desktop.
-func CreateDesktopIntegration(targetFilePath string, debug bool) (error) {
+func CreateDesktopIntegration(targetFilePath string) (error) {
 	libAppImage, err := libappimagego.NewLibAppImageBindings() // Load the `libappimage` Library For Integration
 	if err != nil {
 		return err
 	}
 
-	err = libAppImage.Register(targetFilePath, debug) // Register The File
+	err = libAppImage.Register(targetFilePath, false) // Register The File
 	if err != nil {
 		return err
 	} else {

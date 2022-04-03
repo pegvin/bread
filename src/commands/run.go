@@ -27,7 +27,7 @@ func runAppImage(filePath string, permissionLevel uint8, arguments []string) (er
 	return appImage.Run(arguments)
 }
 
-func (cmd *RunCmd) Run(debug bool) (err error) {
+func (cmd *RunCmd) Run() (err error) {
 	if cmd.Level > 4 {
 		return errors.New("permission level can only be 0, 1, 2 or 3")
 	}

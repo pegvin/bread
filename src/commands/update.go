@@ -18,7 +18,7 @@ type UpdateCmd struct {
 }
 
 // Function Which Will Be Executed When `update` is called.
-func (cmd *UpdateCmd) Run(debug bool) (err error) {
+func (cmd *UpdateCmd) Run() (err error) {
 	// Variable which will hold if any app was updated.
 	var howManyUpdates int = 0
 
@@ -104,14 +104,14 @@ func (cmd *UpdateCmd) Run(debug bool) (err error) {
 		}
 
 		// Integrated The AppImage To Desktop
-		err = utils.CreateDesktopIntegration(targetFilePath, debug)
+		err = utils.CreateDesktopIntegration(targetFilePath)
 		if err != nil {
 			os.Remove(targetFilePath)
 			return err
 		}
 
 		sha1hash, _ := utils.GetFileSHA1(targetFilePath)
-		appImageInfo, _ := utils.GetAppImageInfo(targetFilePath, debug)
+		appImageInfo, _ := utils.GetAppImageInfo(targetFilePath)
 		err = registry.Add(utils.RegistryEntry{
 			Repo: target,
 			FilePath: targetFilePath,
@@ -126,7 +126,7 @@ func (cmd *UpdateCmd) Run(debug bool) (err error) {
 		}
 
 		// De-Integrate old app from desktop
-		err = utils.RemoveDesktopIntegration(entry.FilePath, debug)
+		err = utils.RemoveDesktopIntegration(entry.FilePath)
 		if err != nil {
 			os.Remove(targetFilePath)
 			return err

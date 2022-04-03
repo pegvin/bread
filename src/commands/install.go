@@ -15,7 +15,7 @@ type InstallCmd struct {
 }
 
 // Function Which Will Be Called When `install` is the Command.
-func (cmd *InstallCmd) Run(debug bool) (err error) {
+func (cmd *InstallCmd) Run() (err error) {
 	// Parse The user input
 	repo, err := repos.ParseTarget(cmd.Target, cmd.TagName)
 	if err != nil {
@@ -56,10 +56,10 @@ func (cmd *InstallCmd) Run(debug bool) (err error) {
 	}
 
 	// Add The Current Application To The Registry `.registry.json`
-	cmd.addToRegistry(targetFilePath, repo, release.Tag, debug)
+	cmd.addToRegistry(targetFilePath, repo, release.Tag)
 
 	// Integrated The AppImage To Desktop
-	err = utils.CreateDesktopIntegration(targetFilePath, debug)
+	err = utils.CreateDesktopIntegration(targetFilePath)
 	if err != nil {
 		fmt.Println("Integration Failed: " + err.Error())
 	} else {
@@ -74,9 +74,9 @@ func (cmd *InstallCmd) Run(debug bool) (err error) {
 }
 
 // Function To Add Installed Program To Registry (Installed App information is stored in here).
-func (cmd *InstallCmd) addToRegistry(targetFilePath string, repo repos.Application, TagName string, debug bool) (error) {
+func (cmd *InstallCmd) addToRegistry(targetFilePath string, repo repos.Application, TagName string) (error) {
 	sha1, _ := utils.GetFileSHA1(targetFilePath) // Get The Sha1 Hash
-	appimageInfo, err := utils.GetAppImageInfo(targetFilePath, debug)
+	appimageInfo, err := utils.GetAppImageInfo(targetFilePath)
 	if err != nil {
 		return err
 	}

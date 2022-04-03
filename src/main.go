@@ -20,7 +20,6 @@ var cli struct {
 	Search     commands.SearchCmd     `cmd:"" help:"Search for appliation from appimage list."`
 	Clean      commands.CleanCmd      `cmd:"" help:"Clean all the cache & unused registry entries."`
 	Version    VersionFlag            `name:"version" short:"v" help:"Print version information and quit"`
-	Debug      bool                   `short:"d" help:"Show extra information for debugging." default:"false"`
 }
 
 func (v VersionFlag) BeforeApply(app *kong.Kong, vars kong.Vars) error {
@@ -43,6 +42,6 @@ func main() {
 			Compact: true,
 		}))
 	// Call the Run() method of the selected parsed command.
-	err := ctx.Run(cli.Debug)
+	err := ctx.Run()
 	ctx.FatalIfErrorf(err)
 }

@@ -15,7 +15,7 @@ type ListCmd struct {
 }
 
 // Function which will be executed when `list` is called.
-func (r *ListCmd) Run(debug bool) error {
+func (r *ListCmd) Run() error {
 	registry, err := utils.OpenRegistry() // Open The Registry
 	if err != nil {
 		return err
