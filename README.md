@@ -141,6 +141,7 @@ In the `Applications` directory there is also a file named `.AppImageFeed.json` 
 
 ---
 ## Related:
+- [Zap - :zap: Delightful AppImage package manager ](https://github.com/srevinsaju/zap)
 - [A AppImage Manager Written in Shell](https://github.com/ivan-hc/AM-Application-Manager)
 - [The Original Tool Which Bread is Based On](https://github.com/AppImageCrafters/appimage-cli-tool)
 
