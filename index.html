@@ -35,8 +35,8 @@
 			<h1 id="projectTitle">Bread</h1>
 			<h2 id="projectTagline">Install, update, remove & run AppImage from your CLI</h2>
 			<section id="downloads">
-				<a href="https://github.com/DEVLOPRR/bread/archive/refs/tags/v0.7.0.tar.gz" class="tar_download" title="Download The Source Code As tar.gz file"></a>
-				<a href="https://github.com/DEVLOPRR/bread/archive/refs/tags/v0.7.0.zip" class="zip_download" title="Download The Source Code As zip file"></a>
+				<a href="https://github.com/DEVLOPRR/bread/archive/refs/tags/v0.7.2.tar.gz" class="tar_download" title="Download The Source Code As tar.gz file"></a>
+				<a href="https://github.com/DEVLOPRR/bread/archive/refs/tags/v0.7.2.zip" class="zip_download" title="Download The Source Code As zip file"></a>
 			</section>
 		</header>
 	</div>
@@ -54,7 +54,7 @@
 			<script id="asciicast-476960" src="https://asciinema.org/a/476960.js" async></script>
 
 			<h2>Installation</h2>
-			<pre>sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.7.0/bread-0.7.0-x86_64.AppImage -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread</pre>
+			<pre>sudo curl -L https://github.com/DEVLOPRR/bread/releases/download/v0.7.2/bread-0.7.2-x86_64.AppImage -o /usr/local/bin/bread && sudo chmod +x /usr/local/bin/bread</pre>
 			<hr>
 			<h2>Usage</h2>
 
@@ -114,6 +114,10 @@
 					<div>
 						<p>You can list all the installed applications using list command</p>
 						<pre>bread list</pre>
+						<p>You can also get the SHA-1 Hash of the appimages using the <code>-s</code> or <code>--show-sha1</code> Flag</p>
+						<pre>bread list -s</pre>
+						<p>You can also get the GitHub release tag <code>-t</code> or <code>--show-tag</code> Flag</p>
+						<pre>bread list -t</pre>
 					</div>
 				</li>
 
