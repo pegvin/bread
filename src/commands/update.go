@@ -30,7 +30,11 @@ func (cmd *UpdateCmd) Run() (err error) {
 	}
 
 	if len(cmd.Targets) == 0 {
-		fmt.Println("No Application Installed")
+		if cmd.All {
+			fmt.Println("No Application Installed")
+		} else {
+			fmt.Println("No Application Specified To Update")
+		}
 		return nil
 	}
 
@@ -100,19 +104,31 @@ func (cmd *UpdateCmd) Run() (err error) {
 			return err
 		}
 
-		registry, err := utils.OpenRegistry()
-		registry.Remove(entry.FilePath) // Remove old file from registry
-
-		if err != nil {
-			return err
-		}
-
 		// Integrated The AppImage To Desktop
 		err = utils.CreateDesktopIntegration(targetFilePath)
 		if err != nil {
 			os.Remove(targetFilePath)
 			return err
 		}
+
+		registry, err := utils.OpenRegistry()
+		if err != nil {
+			return err
+		}
+
+		// De-Integrate old app from desktop
+		err = utils.RemoveDesktopIntegration(entry.FilePath)
+		if err != nil {
+			os.Remove(targetFilePath) // If error, remove the newly downloaded appimage.
+			return err
+		} else {
+			err = os.Remove(entry.FilePath) // Remove the old appimage
+			if err != nil {
+				fmt.Println("Cannot Remove The Old AppImage.\n", err.Error())
+			}
+		}
+
+		registry.Remove(entry.FilePath) // Remove Old File From Registry
 
 		sha1hash, _ := utils.GetFileSHA1(targetFilePath)
 		appImageInfo, _ := utils.GetAppImageInfo(targetFilePath)
@@ -129,14 +145,6 @@ func (cmd *UpdateCmd) Run() (err error) {
 			return err
 		}
 
-		// De-Integrate old app from desktop
-		err = utils.RemoveDesktopIntegration(entry.FilePath)
-		if err != nil {
-			os.Remove(targetFilePath)
-			return err
-		}
-
-		registry.Remove(entry.FilePath)
 		err = registry.Close()
 		if err != nil {
 			return err
@@ -179,7 +187,6 @@ func (cmd *UpdateCmd) getRegistryEntry(target string) (utils.RegistryEntry, erro
 	defer registry.Close()
 
 	entry, _ := registry.Lookup(target)
-	entry.FilePath = target
 
 	return entry, nil
 }
