@@ -7,7 +7,7 @@ BINARY="bread" # Output Binary Name
 DIST="build" # Output Directory Name
 
 # Simple Hack To Get The Version Number From main.go file
-VERSION="0.7.1"
+VERSION="0.7.2"
 ENTRY_FILE="src/main.go" # Main Entry File To Compile
 OUTPUT="$DIST/$BINARY" # Output Path Of Built Binary
 COMPRESSED_OUTPUT="$OUTPUT-$VERSION-x86_64" # Output path of the compressed binary
