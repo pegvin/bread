@@ -12,6 +12,7 @@ import (
 
 type ListCmd struct {
 	ShowSha1 bool `short:"s" name:"show-sha1" help:"Show SHA1 Hashes too." default:"false"`
+	ShowTagName bool `short:"t" name:"show-tag" help:"Show Release Tags." default:"false"`
 }
 
 // Function which will be executed when `list` is called.
@@ -32,24 +33,42 @@ func (r *ListCmd) Run() error {
 	tabWriter := ansiterm.NewTabWriter(&buf, 20, 4, 0, ' ', 0)
 	tabWriter.SetColorCapable(true)
 
-	tabWriter.SetForeground(ansiterm.Green)
+	tabWriter.SetForeground(ansiterm.BrightGreen)
 	if r.ShowSha1 {
-		_, _ = tabWriter.Write([]byte("User/Repo\t File Name\t SHA1 HASH\n"))
-		_, _ = tabWriter.Write([]byte("---------\t ---------\t ---------\n"))
+		if r.ShowTagName {
+			_, _ = tabWriter.Write([]byte("User/Repo\t File Name\t Tag Name \t SHA1 HASH\n"))
+			_, _ = tabWriter.Write([]byte("---------\t ---------\t ---------\t ---------\n"))
+		} else {
+			_, _ = tabWriter.Write([]byte("User/Repo\t File Name\t SHA1 HASH\n"))
+			_, _ = tabWriter.Write([]byte("---------\t ---------\t ---------\n"))
+		}
 	} else {
-		_, _ = tabWriter.Write([]byte("User/Repo\t File Name\n"))
-		_, _ = tabWriter.Write([]byte("---------\t ---------\n"))
+		if r.ShowTagName {
+			_, _ = tabWriter.Write([]byte("User/Repo\t File Name\t Tag Name \n"))
+			_, _ = tabWriter.Write([]byte("---------\t ---------\t ---------\n"))
+		} else {
+			_, _ = tabWriter.Write([]byte("User/Repo\t File Name\n"))
+			_, _ = tabWriter.Write([]byte("---------\t ---------\n"))
+		}
 	}
 
-	tabWriter.SetForeground(ansiterm.DarkGray)
+	tabWriter.SetForeground(ansiterm.Default)
 
 	var lines [][]string
 	for fileName, v := range registry.Entries {
 		var line []string
 		if r.ShowSha1 {
-			line = []string{v.Repo, filepath.Base(fileName), v.FileSha1}
+			if r.ShowTagName {
+				line = []string{v.Repo, filepath.Base(fileName), v.TagName, v.FileSha1}
+			} else {
+				line = []string{v.Repo, filepath.Base(fileName), v.FileSha1}
+			}
 		} else {
-			line = []string{v.Repo, filepath.Base(fileName)}
+			if r.ShowTagName {
+				line = []string{v.Repo, filepath.Base(fileName), v.TagName}
+			} else {
+				line = []string{v.Repo, filepath.Base(fileName)}
+			}
 		}
 		lines = append(lines, line)
 	}
@@ -59,9 +78,17 @@ func (r *ListCmd) Run() error {
 
 	for _, line := range lines {
 		if r.ShowSha1 {
-			_, _ = tabWriter.Write([]byte(line[0] + "\t " + line[1] + "\t " + line[2] + "\n"))
+			if r.ShowTagName {
+				_, _ = tabWriter.Write([]byte(line[0] + "\t " + line[1] + "\t " + line[2] + "\t " + line[3] + "\n"))
+			} else {
+				_, _ = tabWriter.Write([]byte(line[0] + "\t " + line[1] + "\t " + line[2] + "\n"))
+			}
 		} else {
-			_, _ = tabWriter.Write([]byte(line[0] + "\t " + line[1] + "\t " + "\n"))
+			if r.ShowTagName {
+				_, _ = tabWriter.Write([]byte(line[0] + "\t " + line[1] + "\t " + line[2] + "\t " + "\n"))
+			} else {
+				_, _ = tabWriter.Write([]byte(line[0] + "\t " + line[1] + "\n"))
+			}
 		}
 	}
 	_ = tabWriter.Flush()
