@@ -94,6 +94,9 @@ sudo rm -v /usr/local/bin/bread
 
   <p>the <code>--check</code> & <code>--all</code> flag can be used together</p>
   <pre><code>bread update --all --check</code></pre>
+
+  <p>the <code>-n</code> or <code>--no-pre-release</code> flag can be used to disable updates for pre-releases.</p>
+  <pre><code>bread update --no-pre-release</code></pre>
 </details>
 
 <details>
