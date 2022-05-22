@@ -7,7 +7,7 @@ import (
 	"io/ioutil"
 	"encoding/json"
 	"path/filepath"
-	updateUtils "github.com/DEVLOPRR/appimage-update/util"
+	updateUtils "github.com/pegvin/appimage-update/util"
 )
 
 type RegistryEntry struct {

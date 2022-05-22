@@ -3,7 +3,7 @@ package utils
 import (
 	"os"
 	"bytes"
-	"github.com/DEVLOPRR/libappimage-go"
+	"github.com/pegvin/libappimage-go"
 )
 
 // Get AppImage information: isTerminalApp, AppImageType
