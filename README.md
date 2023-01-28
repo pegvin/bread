@@ -213,6 +213,7 @@ To install the dependencies require to build go binary
 ---
 
 ## Todo
+- [ ] Switch To Some Other Language Since Go Module System is Shit
 - [ ] Improve UI
 - [x] Make AppImages Runnable From Remote Without Installing (Done in v0.3.6)
 - [x] Work On Reducing Binary Sizes (Reduced From 11.1MB to 3.1MB)
